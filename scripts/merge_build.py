@@ -3,7 +3,7 @@
 """chailive 汇聚构建器（reducer = loong-dev）。
 
 输入：/tmp/octopus/cfl-work/outs/shard{0..N}/（各节点回传的 clean/*.json + summary.json）
-输出：/root/chailive/{index.html, data/<bookId>.js, stats.json, build.json}
+输出：/root/chailive/{books.html, data/<bookId>.js, stats.json, build.json}
 
 职责：
   1. 收块校验：逐文件 md5 对账 summary.out_md5；计数断言（1713 文件 / 19262 拆页）
@@ -219,17 +219,17 @@ def main():
     html_out = tmpl.replace("__STATS__", json.dumps(stats, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c"))
     html_out = html_out.replace("__STATS_BOOKS__", str(stats["books"])).replace("__STATS_MEMOIRS__", str(stats["memoirs"]))
     html_out = html_out.replace("__BOOKS__", l1_blob)
-    (out / "index.html").write_text(html_out)
+    (out / "books.html").write_text(html_out)
 
     # 确定性指纹：全产物 sha256
-    hashes = {"index.html": sha((out / "index.html").read_bytes())}
+    hashes = {"books.html": sha((out / "books.html").read_bytes())}
     for f in sorted(data_dir.glob("*.js")):
         hashes[f"data/{f.name}"] = sha(f.read_bytes())
     (out / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1))
     (out / "build.json").write_text(json.dumps({"hashes": hashes, "stats": stats}, ensure_ascii=False, indent=1))
     data_mb = sum(f.stat().st_size for f in data_dir.glob("*.js")) / 1e6
     biggest = sorted(((f.stat().st_size, f.name) for f in data_dir.glob("*.js")), reverse=True)[:3]
-    print(f"build OK: index.html {len(html_out)/1e6:.2f}MB, data {len(hashes)-1} files {data_mb:.1f}MB")
+    print(f"build OK: books.html {len(html_out)/1e6:.2f}MB, data {len(hashes)-1} files {data_mb:.1f}MB")
     print("biggest:", [(f'{n} {s/1e6:.1f}MB') for s, n in biggest])
     print(f"L1 books {stats['books']} | riaComplete {ria_full} | cs {stats['chaishujia']} | clubs {stats['clubs']}")
 

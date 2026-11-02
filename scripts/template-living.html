@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="chailive · 拆生活指南：31 个生活主题章，19262 张拆页卡片，每张标注过级徽章（A/B/C）、说人话摘要与可展开的 RIA 便签。单文件、零依赖、可离线阅读。">
+<title>chailive · 拆生活指南</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#ffffff;--bg-alt:#f6f6f7;--bg-elv:#ffffff;--bg-mute:#f1f1f2;
+  --divider:#e2e2e3;
+  --t1:rgba(60,60,67,1);--t2:rgba(60,60,67,.78);--t3:rgba(60,60,67,.56);
+  --brand-1:#8d6e3c;--brand-2:#a58450;--brand-soft:rgba(180,140,70,.12);
+  --ga:#18794e;--ga-soft:rgba(16,185,129,.12);
+  --gb:#915930;--gb-soft:rgba(234,179,8,.15);
+  --gc:#565a5f;--gc-soft:rgba(142,150,170,.15);
+  --mark:rgba(234,179,8,.34);
+  --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --bar:56px;--side:280px;
+}
+[data-theme=dark]{
+  --bg:#1b1b1f;--bg-alt:#161618;--bg-elv:#202127;--bg-mute:#2b2b2f;
+  --divider:#2e2e32;
+  --t1:rgba(255,255,245,.88);--t2:rgba(235,235,245,.62);--t3:rgba(235,235,245,.4);
+  --brand-1:#d4b483;--brand-2:#e0c39a;--brand-soft:rgba(180,140,70,.16);
+  --ga:#3dd68c;--ga-soft:rgba(16,185,129,.14);
+  --gb:#f9b44e;--gb-soft:rgba(234,179,8,.16);
+  --gc:#a4a8ae;--gc-soft:rgba(142,150,170,.16);
+  --mark:rgba(234,179,8,.3);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--t1);font:15px/1.65 var(--font)}
+.bar{position:fixed;top:0;left:0;right:0;height:var(--bar);display:flex;align-items:center;gap:8px;
+  padding:0 14px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--divider);z-index:50}
+.bar h1{font-size:15px;margin:0;font-weight:650;white-space:nowrap;cursor:pointer}
+.bar h1 small{font-weight:400;color:var(--t3);margin-left:6px;font-size:11px}
+.bar input{flex:1;min-width:60px;max-width:480px;height:34px;border:1px solid var(--divider);border-radius:9px;
+  background:var(--bg-elv);color:var(--t1);padding:0 12px;font:13.5px var(--font);outline:none}
+.bar input:focus{border-color:var(--brand-2)}
+.btn{height:34px;padding:0 12px;border:1px solid var(--divider);border-radius:9px;background:var(--bg-elv);
+  color:var(--t2);font:13px var(--font);cursor:pointer;white-space:nowrap}
+.btn:hover{color:var(--t1)}
+.btn.on{background:var(--brand-soft);color:var(--brand-1);border-color:var(--brand-2);font-weight:650}
+button.tobooks{margin-left:auto}
+#top{position:fixed;right:18px;bottom:18px;width:38px;height:38px;border-radius:50%;border:1px solid var(--divider);
+  background:var(--bg-elv);color:var(--t2);font-size:16px;cursor:pointer;display:none;z-index:40;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+
+/* ---- 双栏：左 TOC + 右卡片流 ---- */
+.wrap{display:flex;max-width:1280px;margin:0;padding-top:var(--bar)}
+.toc{position:sticky;top:var(--bar);width:var(--side);flex:none;height:calc(100vh - var(--bar));overflow-y:auto;
+  padding:14px 10px 30px 14px;border-right:1px solid var(--divider);scrollbar-width:thin}
+.toc .brand{font-size:12.5px;color:var(--t3);margin:6px 4px 12px;line-height:1.6}
+.toc a{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5.5px 10px;border-radius:8px;
+  color:var(--t2);text-decoration:none;font-size:13.5px}
+.toc a:hover{background:var(--bg-mute);color:var(--t1)}
+.toc a.on{background:var(--brand-soft);color:var(--brand-1);font-weight:650}
+.toc a .n{font-size:11px;color:var(--t3);font-variant-numeric:tabular-nums;flex:none}
+.toc a.on .n{color:var(--brand-1)}
+.stream{flex:1;min-width:0;padding:20px 26px 80px}
+.loading,.empty{color:var(--t3);padding:40px;text-align:center;font-size:14px}
+
+/* ---- 章 ---- */
+.chap{margin:34px 0 14px;scroll-margin-top:calc(var(--bar) + 8px)}
+.chap:first-child{margin-top:8px}
+.chap .cid{font-size:11px;color:var(--brand-1);font-weight:700;letter-spacing:.08em}
+.chap h2{font-size:21px;margin:2px 0 4px;font-weight:700}
+.chap .cdesc{font-size:13px;color:var(--t3);margin:0 0 14px;max-width:640px}
+
+/* ---- 卡片 ---- */
+.card{border:1px solid var(--divider);border-radius:12px;background:var(--bg-elv);margin-bottom:12px;overflow:hidden;
+  break-inside:avoid;transition:border-color .15s}
+.card:hover{border-color:var(--brand-2)}
+.chead{display:flex;align-items:flex-start;gap:10px;padding:13px 15px 11px;cursor:pointer}
+.chead .no{flex:none;font-size:11px;color:var(--t3);font-variant-numeric:tabular-nums;padding-top:3px;min-width:44px}
+.chead .tt{flex:1;font-weight:650;font-size:15px;line-height:1.5}
+.chead .bdg{flex:none;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:2px}
+.bdg-A{color:var(--ga);background:var(--ga-soft)}
+.bdg-B{color:var(--gb);background:var(--gb-soft)}
+.bdg-C{color:var(--gc);background:var(--gc-soft)}
+.cbody{padding:0 15px 13px 69px;display:none}
+.card.open .cbody{display:block}
+.cbody .say{font-size:14px;color:var(--t2);line-height:1.7;white-space:pre-wrap}
+.cbody .src{margin-top:9px;font-size:12px;color:var(--t3);cursor:pointer}
+.cbody .src:hover{color:var(--brand-1)}
+.ria-box{margin-top:10px;border-left:3px solid var(--brand-soft);padding:2px 0 2px 12px;display:none}
+.ria-box.show{display:block}
+.ria-box .rrow{margin:9px 0}
+.ria-box .rl{font-size:11px;font-weight:700;color:var(--brand-1);letter-spacing:.06em}
+.ria-box .rv{font-size:13.5px;color:var(--t2);margin-top:2px;white-space:pre-wrap}
+.ria-box .rv p{margin:.35em 0}
+mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+.hnt{font-size:11px;color:var(--t3);padding:6px 0 0}
+
+@media (max-width:860px){
+  .toc{display:none}
+  .stream{padding:14px 12px 70px}
+  .cbody{padding-left:15px}
+  .chead .no{display:none}
+  .bar input{max-width:none}
+}
+@media print{
+  .bar,.toc,#top,.hnt{display:none}
+  .wrap{padding-top:0}
+  .card{break-inside:avoid}
+  .cbody{display:block}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1 id="home">chailive<small>拆生活指南</small></h1>
+  <input id="q" type="search" placeholder="搜主题 / 说人话 / 书名…" autocomplete="off">
+  <button class="btn mode" data-m="all">全部</button>
+  <button class="btn mode" data-m="a">只看 A 级</button>
+  <button class="btn mode" data-m="say">只看说人话</button>
+  <button class="btn" id="theme">明暗</button>
+  <button class="btn tobooks" onclick="location.href='books.html'">书库</button>
+</header>
+<div class="wrap">
+  <nav class="toc" id="toc"><div class="loading">加载中…</div></nav>
+  <main class="stream" id="stream"><div class="loading">加载中…</div></main>
+</div>
+<button id="top" title="回到顶部">↑</button>
+<script src="data/chapters.js"></script>
+<script>
+(function(){
+"use strict";
+var CHAPS=window.CHAI_CHAPTERS||[], CARDS=window.CHAI_CARDS||[];
+var toc=document.getElementById('toc'), stream=document.getElementById('stream'), q=document.getElementById('q');
+var st={mode:'all',q:'',ch:null,filtered:null};
+var loaded={}, PD=window.CHAI_PD=window.CHAI_PD||{};
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function hl(s,kw){s=esc(s);if(!kw)return s;try{return s.replace(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),function(m){return '<mark>'+m+'</mark>'})}catch(e){return s}}
+function applyTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem('cfl-theme',t)}
+applyTheme(localStorage.getItem('cfl-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+document.getElementById('theme').onclick=function(){applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')};
+document.getElementById('home').onclick=function(){location.hash='';render()};
+window.__clAll=function(){st.ch=null;render()};
+window.addEventListener('scroll',function(){document.getElementById('top').style.display=scrollY>600?'block':'none'});
+document.getElementById('top').onclick=function(){scrollTo({top:0,behavior:'smooth'})};
+Array.prototype.forEach.call(document.querySelectorAll('.mode'),function(b){
+  b.onclick=function(){
+    st.mode=b.dataset.m;st.modeLabel=b.textContent;
+    Array.prototype.forEach.call(document.querySelectorAll('.mode'),function(x){x.classList.toggle('on',x===b)});
+    render();
+  };
+});
+document.querySelector('.mode[data-m="all"]').classList.add('on');
+q.addEventListener('input',function(){st.q=q.value.trim();render()});
+
+// ---------- 过滤 ----------
+function pass(c){
+  if(st.mode==='a'&&c.g!=='A')return false;
+  if(st.mode==='say'&&!c.r)return false;
+  if(st.q){
+    var k=st.q.toLowerCase();
+    if((c.t||'').toLowerCase().indexOf(k)<0&&(c.r||'').toLowerCase().indexOf(k)<0&&(c.s||'').toLowerCase().indexOf(k)<0)return false;
+  }
+  return true;
+}
+function computeFiltered(){
+  st.filtered=CARDS.filter(pass);
+}
+
+// ---------- TOC ----------
+var tocLinks=[];
+function buildToc(){
+  var h='<div class="brand">拆生活指南<br>'+CHAPS.length+' 章 · '+CARDS.length+' 张拆页卡片</div>';
+  CHAPS.forEach(function(c,i){
+    h+='<a href="#c-'+c.id+'" data-id="'+c.id+'"><span>'+esc(c.name)+'</span><span class="n">'+c.n+'</span></a>';
+  });
+  toc.innerHTML=h;
+  tocLinks=[].slice.call(toc.querySelectorAll('a'));
+  tocLinks.forEach(function(a){a.onclick=function(e){e.preventDefault();st.ch=a.dataset.id;showChapter()}});
+}
+
+// ---------- 渲染 ----------
+function gradeCls(g){return 'bdg-'+g}
+function cardHTML(c,idx){
+  var no=esc(c.c.replace('ch',''))+'-'+idx;
+  var riaHint=c.x?' · RIA 完整':'';
+  var h='<div class="card" data-b="'+c.b+'" data-i="'+c.i+'" data-x="'+(c.x?1:0)+'">'
+    +'<div class="chead" onclick="var d=this.parentNode;if(d.classList.contains(\'open\')){d.classList.remove(\'open\')}else{d.classList.add(\'open\');window.__clFill(d)}">'
+    +'<span class="no">'+no+'</span><span class="tt">'+hl(c.t||'(未命名)',st.q)+'</span>'
+    +'<span class="bdg '+gradeCls(c.g)+'">'+c.g+'</span></div>'
+    +'<div class="cbody">'
+    +(c.r?'<div class="say">'+hl(c.r,st.q)+'</div>':'<div class="say hnt">（无说人话摘要）</div>')
+    +(c.s?'<div class="src" onclick="location.href=\'books.html#book/'+c.b+'\'">出处 ·《'+esc(c.s)+'》 → 书库详情</div>':'')
+    +'<div class="ria-box"></div>'
+    +'</div></div>';
+  return h;
+}
+function render(){
+  computeFiltered();
+  if(st.filtered.length===CARDS.length&&!st.q&&st.mode==='all'){
+    // 全量视图：31 章全渲染（分组），一次 innerHTML（19262 卡 OK）
+    var h='',i=0;
+    CHAPS.forEach(function(cp){
+      var cards=st.filtered.filter(function(c){return c.c===cp.id});
+      if(!cards.length)return;
+      h+='<section class="chap" id="c-'+cp.id+'"><div class="cid">'+esc(cp.id.toUpperCase())+'</div><h2>'+esc(cp.name)+'</h2><p class="cdesc">'+esc(cp.desc||'')+'</p></section>';
+      cards.forEach(function(c){h+=cardHTML(c,++i)});
+    });
+    stream.innerHTML=h;
+  }else{
+    // 过滤视图：平铺 + 计数
+    var h='<section class="chap"><div class="cid">FILTER</div><h2>'+(st.q?'「'+esc(st.q)+'」':'筛选结果')+'</h2><p class="cdesc">'+st.filtered.length+' 张卡片 · '+st.modeLabel+'</p></section>';
+    st.filtered.slice(0,2000).forEach(function(c,j){h+=cardHTML(c,j+1)});
+    if(st.filtered.length>2000)h+='<div class="empty">仅显示前 2000 张，请缩小范围</div>';
+    if(!st.filtered.length)h='<div class="empty">没有匹配的卡片</div>';
+    stream.innerHTML=h;
+  }
+}
+st.modeLabel='全部';
+// ---------- 单章视图 ----------
+function showChapter(){
+  var cp=null;
+  CHAPS.forEach(function(c){if(c.id===st.ch)cp=c});
+  tocLinks.forEach(function(a){a.classList.toggle('on',a.dataset.id===st.ch)});
+  if(!cp){render();return}
+  var i=0;
+  var cards=CARDS.filter(function(c){return pass(c)&&c.c===st.ch});
+  var h='<section class="chap"><div class="cid">'+esc(cp.id.toUpperCase())+'</div><h2>'+esc(cp.name)+'</h2><p class="cdesc">'+esc(cp.desc||'')+'</p></section>';
+  cards.forEach(function(c){h+=cardHTML(c,++i)});
+  h+='<div class="empty">— 章完 · <a href="#" onclick="window.__clAll();return false" style="color:var(--brand-1)">查看全部章节</a> —</div>';
+  stream.innerHTML=h;
+  scrollTo({top:0});
+}
+
+// ---------- RIA 懒加载（data/<bid>.js + part 定位）----------
+function loadScript(src){return new Promise(function(res,rej){
+  var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=function(){rej(new Error(src))};
+  document.head.appendChild(s);
+})}
+function findPart(bd,mid){
+  var np=bd.np||1;if(np<=1)return 1;
+  var pb=bd.pb,lo=0,hi=pb.length-1;
+  while(lo<hi){var m=(lo+hi)>>1;if(mid<=pb[m])hi=m;else lo=m+1}
+  return lo+1;
+}
+function findMemoir(bd,mid){
+  var pi=findPart(bd,mid);
+  var arr=pi===1?bd.ms:PD[bd.book.id+'_'+pi];
+  if(!arr)return null;
+  for(var k=0;k<arr.length;k++)if(String(arr[k].id)===String(mid))return arr[k];
+  return null;
+}
+window.__clFill=function(card){
+  var bid=card.dataset.b, mid=card.dataset.i, box=card.querySelector('.ria-box');
+  if(!card.dataset.x||card.dataset.x==='0'){box.innerHTML='<div class="rv hnt">该拆页无 RIA 便签</div>';box.classList.add('show');return}
+  box.innerHTML='<div class="rv hnt">RIA 加载中…</div>';box.classList.add('show');
+  var p1=loaded[bid]||(loaded[bid]=loadScript('data/'+bid+'.js').then(function(){
+    return (window.CHAI_DATA||{})[bid];
+  }));
+  p1.then(function(bd){
+    if(!bd)throw new Error('no shard');
+    var pi=findPart(bd,mid);
+    if(pi===1||bd.np<=1)return bd;
+    var key=bd.book.id+'_'+pi;
+    if(PD[key])return bd;
+    return loadScript('data/'+bd.book.id+'.p'+pi+'.js').then(function(){return bd});
+  }).then(function(bd){
+    var m=findMemoir(bd,mid);
+    if(!m){box.innerHTML='<div class="rv hnt">未找到拆页正文</div>';return}
+    var h='';
+    if(m.prologue)h+='<div class="rrow"><div class="rl">引言</div><div class="rv">'+m.prologue+'</div></div>';
+    (m.texts||[]).forEach(function(t){
+      var fl=t.flags||{};
+      if(fl.r&&t.quote)h+='<div class="rrow"><div class="rl">R · 原文</div><div class="rv">'+t.quote+'</div></div>';
+      if(fl.i&&t.explains)h+='<div class="rrow"><div class="rl">I · 重述</div><div class="rv">'+t.explains+'</div></div>';
+      if(fl.a&&t.interaction)h+='<div class="rrow"><div class="rl">A · 应用</div><div class="rv">'+t.interaction+'</div></div>';
+    });
+    if(!h)h='<div class="rv hnt">该拆页便签为空</div>';
+    box.innerHTML=h;
+  }).catch(function(){box.innerHTML='<div class="rv hnt">RIA 加载失败</div>'});
+};
+
+buildToc();
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="chailive · 拆学习：__STATS_BOOKS__ 本书、__STATS_MEMOIRS__ 个拆页，RIA 便签读书法全库。单文件、零依赖、可离线阅读。">
+<title>chailive · 拆学习</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#ffffff;--bg-alt:#f6f6f7;--bg-elv:#ffffff;--bg-mute:#f1f1f2;
+  --divider:#e2e2e3;
+  --t1:rgba(60,60,67,1);--t2:rgba(60,60,67,.78);--t3:rgba(60,60,67,.56);
+  --brand-1:#8d6e3c;--brand-2:#a58450;--brand-soft:rgba(180,140,70,.12);
+  --r:#b8272c;--r-soft:rgba(244,63,94,.10);
+  --i:#3451b2;--i-soft:rgba(100,108,255,.10);
+  --a:#18794e;--a-soft:rgba(16,185,129,.12);
+  --mark:rgba(234,179,8,.34);
+  --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --bar:56px;
+}
+[data-theme=dark]{
+  --bg:#1b1b1f;--bg-alt:#161618;--bg-elv:#202127;--bg-mute:#2b2b2f;
+  --divider:#2e2e32;
+  --t1:rgba(255,255,245,.88);--t2:rgba(235,235,245,.62);--t3:rgba(235,235,245,.4);
+  --brand-1:#d4b483;--brand-2:#e0c39a;--brand-soft:rgba(180,140,70,.16);
+  --r:#f66f81;--r-soft:rgba(244,63,94,.14);
+  --i:#a8b1ff;--i-soft:rgba(100,108,255,.14);
+  --a:#3dd68c;--a-soft:rgba(16,185,129,.14);
+  --mark:rgba(234,179,8,.3);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--t1);font:15px/1.65 var(--font)}
+.bar{position:fixed;top:0;left:0;right:0;height:var(--bar);display:flex;align-items:center;gap:8px;
+  padding:0 14px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--divider);z-index:50}
+.bar h1{font-size:15px;margin:0;font-weight:650;white-space:nowrap;cursor:pointer}
+.bar h1 small{font-weight:400;color:var(--t3);margin-left:6px;font-size:11px}
+.bar input{flex:1;min-width:60px;max-width:520px;height:34px;border:1px solid var(--divider);border-radius:8px;
+  background:var(--bg-mute);color:var(--t1);padding:0 12px;font-size:13px;outline:none}
+.bar input:focus{border-color:var(--brand-2)}
+.btn{height:30px;padding:0 10px;border:1px solid var(--divider);border-radius:7px;background:var(--bg-elv);
+  color:var(--t2);font-size:12px;cursor:pointer;white-space:nowrap;user-select:none}
+.btn:hover{border-color:var(--brand-2);color:var(--brand-1)}
+.btn.on{background:var(--brand-soft);border-color:var(--brand-2);color:var(--brand-1)}
+main{max-width:1060px;margin:0 auto;padding:calc(var(--bar) + 18px) 16px 80px}
+.hero{background:linear-gradient(135deg,var(--brand-soft),transparent 60%);border:1px solid var(--divider);
+  border-radius:14px;padding:22px 22px 18px;margin-bottom:16px}
+.hero h2{margin:0 0 6px;font-size:21px}
+.hero p{margin:0 0 12px;color:var(--t2);font-size:13.5px;max-width:72em}
+.kpis{display:flex;flex-wrap:wrap;gap:8px}
+.kpi{background:var(--bg-elv);border:1px solid var(--divider);border-radius:9px;padding:6px 12px;font-size:12px;color:var(--t3)}
+.kpi b{display:block;font-size:17px;color:var(--t1);font-weight:650}
+.riatab{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.riatab span{font-size:11.5px;padding:3px 9px;border-radius:99px;font-weight:600}
+.riatab .rr{background:var(--r-soft);color:var(--r)}
+.riatab .ri{background:var(--i-soft);color:var(--i)}
+.riatab .ra{background:var(--a-soft);color:var(--a)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
+.bcard{border:1px solid var(--divider);border-radius:11px;background:var(--bg-elv);overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;transition:transform .12s,border-color .12s}
+.bcard:hover{transform:translateY(-2px);border-color:var(--brand-2)}
+.covwrap{aspect-ratio:3/4;background:var(--bg-mute);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.covwrap img{width:100%;height:100%;object-fit:cover;display:block}
+.covph{color:var(--t3);font-size:12px;padding:10px;text-align:center;word-break:break-all;display:-webkit-box;
+  -webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.bmeta{padding:8px 10px 10px;border-top:1px solid var(--divider)}
+.bmeta .t{font-size:13px;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bmeta .a{font-size:11.5px;color:var(--t3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.bdg{font-size:10.5px;padding:1px 7px;border-radius:99px;background:var(--bg-mute);color:var(--t2)}
+.bdg.nc{background:var(--brand-soft);color:var(--brand-1);font-weight:600}
+.bdg.ria{background:var(--a-soft);color:var(--a);font-weight:600}
+.pager{display:flex;gap:8px;justify-content:center;margin:18px 0;align-items:center;color:var(--t3);font-size:12.5px}
+.bkhead{display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.bkhead .cov{width:110px;flex:0 0 110px;border-radius:8px;overflow:hidden;border:1px solid var(--divider);background:var(--bg-mute)}
+.bkhead .cov img{width:100%;display:block}
+.bkhead .cov .covph{padding:20px 8px;text-align:center;font-size:11px;color:var(--t3);word-break:break-all}
+.bkinfo{flex:1;min-width:240px}
+.bkinfo h2{margin:0 0 6px;font-size:19px;line-height:1.35}
+.bkinfo .sub{color:var(--t2);font-size:13px;margin-bottom:8px}
+.tagrow{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;padding:1px 8px;border-radius:99px;background:var(--brand-soft);color:var(--brand-1);cursor:pointer}
+.back{margin-bottom:12px}
+.mcard{border:1px solid var(--divider);border-radius:11px;background:var(--bg-elv);margin-bottom:10px;overflow:hidden}
+.mhead{padding:11px 14px;cursor:pointer;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.mhead .no{font-size:11px;color:var(--t3);flex:0 0 auto}
+.mhead .topic{font-weight:600;font-size:14px;flex:1;min-width:200px}
+.mhead .lv{font-size:10.5px;color:var(--brand-1);background:var(--brand-soft);border-radius:99px;padding:1px 8px;font-weight:650;flex:0 0 auto}
+.mbody{padding:0 14px 6px;display:none;border-top:1px solid var(--divider)}
+.mcard.open .mbody{display:block}
+.mmeta{padding:8px 0;color:var(--t3);font-size:12px;border-bottom:1px dashed var(--divider);margin-bottom:8px}
+.goal{background:var(--i-soft);border-radius:8px;padding:8px 12px;font-size:12.5px;color:var(--i);margin-bottom:10px}
+.goal b{font-weight:650}
+.sect{margin-bottom:12px}
+.sect h4{margin:0 0 6px;font-size:12.5px;font-weight:650;display:inline-flex;align-items:center;gap:6px}
+.sect .sR h4{color:var(--r)}.sect .sI h4{color:var(--i)}.sect .sA h4{color:var(--a)}
+.sect .ric{border-left:3px solid var(--divider);padding:2px 0 2px 12px;color:var(--t1);font-size:14px}
+.sect .sR .ric{border-color:var(--r)}
+.sect .sI .ric{border-color:var(--i)}
+.sect .sA .ric{border-color:var(--a)}
+.ric p{margin:0 0 8px}
+.ric ul,.ric ol{margin:0 0 8px;padding-left:20px}
+.ric table{border-collapse:collapse;margin:4px 0 8px;font-size:13px}
+.ric td,.ric th{border:1px solid var(--divider);padding:3px 8px}
+.ric h3,.ric h4{font-size:14px;margin:8px 0 4px}
+.ria-full{font-size:10.5px;color:var(--a);background:var(--a-soft);padding:1px 7px;border-radius:99px;font-weight:650}
+.loadmore{display:block;width:100%;padding:9px;margin:4px 0 10px;border:1px dashed var(--divider);border-radius:9px;
+  background:none;color:var(--t2);font-size:12.5px;cursor:pointer}
+.loadmore:hover{color:var(--brand-1);border-color:var(--brand-2)}
+.tsearch{margin-bottom:12px}
+.trow{display:flex;gap:8px;padding:9px 12px;border:1px solid var(--divider);border-radius:10px;margin-bottom:7px;
+  cursor:pointer;background:var(--bg-elv);align-items:baseline;flex-wrap:wrap}
+.trow:hover{border-color:var(--brand-2)}
+.trow .tt{font-weight:600;font-size:13.5px;flex:1;min-width:220px}
+.trow .tb{font-size:12px;color:var(--t2)}
+.trow .tl{font-size:10.5px;color:var(--brand-1)}
+.empty{padding:40px 0;text-align:center;color:var(--t3);font-size:13px}
+#top{position:fixed;right:16px;bottom:18px;width:38px;height:38px;border-radius:50%;border:1px solid var(--divider);
+  background:var(--bg-elv);color:var(--t2);cursor:pointer;display:none;z-index:40;font-size:15px}
+mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+.loading{padding:60px 0;text-align:center;color:var(--t3);font-size:13px}
+.err{padding:40px;text-align:center;color:var(--r);font-size:13px}
+@media (max-width:640px){
+  .bar input{max-width:none}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px}
+  main{padding-left:10px;padding-right:10px}
+  .bkhead .cov{width:86px;flex-basis:86px}
+}
+@media print{
+  .bar,.filters,#top,.loadmore,.back{display:none}
+  main{max-width:none;padding:0}
+  .mcard{break-inside:avoid}
+  .mbody{display:block!important}
+  body{font-size:10.5pt}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1 id="home">chailive<small>拆学习</small></h1>
+  <input id="q" type="search" placeholder="搜书名 / 作者 / 标签，回车全局搜拆页主题" autocomplete="off">
+  <button class="btn" id="f-has">有拆页</button>
+  <button class="btn" id="f-ria">RIA 完整</button>
+  <button class="btn" id="f-cov">有封面</button>
+  <button class="btn" id="theme">明暗</button>
+</header>
+<main id="main"><div class="loading">加载中…</div></main>
+<button id="top" title="回到顶部">↑</button>
+</head>
+<body>
+<header class="bar">
+  <h1 id="home">chailive<small>拆学习</small></h1>
+  <input id="q" type="search" placeholder="搜书名 / 作者 / 标签，回车全局搜拆页主题" autocomplete="off">
+  <button class="btn" id="f-has">有拆页</button>
+  <button class="btn" id="f-ria">RIA 完整</button>
+  <button class="btn" id="f-cov">有封面</button>
+  <button class="btn" id="theme">明暗</button>
+</header>
+<main id="main"><div class="loading">加载中…</div></main>
+<button id="top" title="回到顶部">↑</button>
+<script>
+window.CHAI_STATS=__STATS__;
+window.CHAI_BOOKS=__BOOKS__;
+</script>
+<script>
+(function(){
+"use strict";
+var STATS=window.CHAI_STATS, BOOKS=Object.keys(window.CHAI_BOOKS).map(function(k){return window.CHAI_BOOKS[k]});
+var BYID=window.CHAI_BOOKS;
+var main=document.getElementById('main'), q=document.getElementById('q');
+var st={view:'home',q:'',has:true,ria:false,cov:false,page:1,PER:36,book:null,shown:24};
+var loadedParts={}, topicsLoaded=null, marks=[];
+
+// ---------- 工具 ----------
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function hl(s,kw){s=esc(s);if(!kw)return s;try{return s.replace(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),function(m){return '<mark>'+m+'</mark>'})}catch(e){return s}}
+function coverUrl(id){return 'covers/'+id+'.jpg'}
+function applyTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem('cfl-theme',t)}
+applyTheme(localStorage.getItem('cfl-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+document.getElementById('theme').onclick=function(){
+  applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')};
+window.addEventListener('scroll',function(){document.getElementById('top').style.display=scrollY>600?'block':'none'});
+document.getElementById('top').onclick=function(){scrollTo({top:0,behavior:'smooth'})};
+document.getElementById('home').onclick=function(){location.hash=''};
+
+// ---------- 书检索（L1 内嵌索引）----------
+function bmatch(b,kw){
+  if(st.has&&!b.nc)return false;
+  if(st.ria&&!b.ria)return false;
+  if(st.cov&&!b.cov)return false;
+  if(!kw)return true;
+  kw=kw.toLowerCase();
+  return (b.title||'').toLowerCase().indexOf(kw)>=0||(b.author||'').toLowerCase().indexOf(kw)>=0||((b.tags||[]).join(' ').toLowerCase().indexOf(kw)>=0)||String(b.id).indexOf(kw)>=0}
+function filtered(){var kw=st.q.trim().toLowerCase();return BOOKS.filter(function(b){return bmatch(b,kw)})}
+
+// ---------- 数据分片懒加载（script 标签，file:// 可用）----------
+function loadScript(src){
+  if(loadedParts[src])return loadedParts[src];
+  loadedParts[src]=new Promise(function(res,rej){
+    var s=document.createElement('script');s.src=src;
+    s.onload=function(){res(true)};s.onerror=function(){rej(new Error('加载失败 '+src))};
+    document.head.appendChild(s)});
+  return loadedParts[src]}
+function loadBook(bid){return loadScript('data/'+bid+'.js').then(function(){
+  var d=(window.CHAI_DATA||{})[bid];
+  if(!d||!d.idx)throw new Error('bad shard '+bid);
+  return d})}
+function loadTopicIndex(){return topicsLoaded||(topicsLoaded=loadScript('data/topics.js').then(function(){
+  if(!window.CHAI_TOPICS)throw new Error('no topics');return window.CHAI_TOPICS}))}
+
+// 大书分片定位：bd.pb 是每 part 的累计 memoir 数（[c1,c2,...]，c_last=总页数）
+// part1 正文在 bd.ms；part>=2 在 window.CHAI_PD[bid+'_'+pi]
+function findPart(bd,mid){
+  var np=bd.np||1;
+  if(np<=1)return 1;
+  var pb=bd.pb,lo=0,hi=pb.length-1;
+  while(lo<hi){var m=(lo+hi)>>1;if(mid<=pb[m])hi=m;else lo=m+1}
+  return lo+1}
+function loadMemoirPart(bd,pi){
+  var bid=bd.book.id;
+  if(pi===1||bd.np<=1)return Promise.resolve(bd);
+  return loadScript('data/'+bid+'.p'+pi+'.js')}
+
+// ---------- RIA 渲染 ----------
+function riaHTML(texts,kw){
+  var out='';
+  texts.forEach(function(t,i){
+    var flags=t.flags||{},chips='';
+    ['r','i','a','a1','a2','a3'].forEach(function(k){if(flags[k])chips+='<span class="bdg">'+esc(k.toUpperCase())+'</span>'});
+    var full=chips?' <span class="ria-full">RIA 完整</span>':'';
+    out+='<div class="mcard" id="mm-'+i+'"><div class="mhead" onclick="this.parentNode.classList.toggle(\'open\')">'
+      +'<span class="no">#'+(i+1)+'</span><span class="topic">'+hl(t.quote||'(无原文)',kw)+'</span>'+full+chips+'</div>'
+      +'<div class="mbody"><div class="mmeta">'+esc(t.id||'')+'</div>'
+      +(t.quote?'<div class="sect"><div class="sR"><h4>R · 原文</h4></div><div class="ric">'+t.quote+full+'</div></div>':'')
+      +(t.explains?'<div class="sect"><div class="sI"><h4>I · 讲解</h4></div><div class="ric">'+t.explains+'</div></div>':'')
+      +(t.interaction?'<div class="sect"><div class="sA"><h4>A · 促动</h4></div><div class="ric">'+t.interaction+'</div></div>':'')
+      +'</div></div>'});
+  return out}
+
+function memoirRow(bd,idxEntry,pi){
+  return '<div class="trow" data-mid="'+idxEntry.i+'" data-pi="'+pi+'"><span class="tt">'+esc(idxEntry.t||idxEntry.q||'(未命名)')+'</span>'
+    +(idxEntry.l?'<span class="tl">'+esc(idxEntry.l)+'</span>':'')+'</div>'}
+
+// ---------- 首页 ----------
+function showHome(){
+  st.view='home';document.title='chailive · 拆学习';
+  var kws=st.q.trim();
+  var html='<div class="hero"><h2>拆学习 · RIA 全库</h2>'
+    +'<p>把 <b>'+STATS.books+'</b> 本书的 <b>'+STATS.memoirs+'</b> 个拆页装进口袋：RIA 便签读书法（R 原文 / I 讲解 / A 促动）完整呈现，含拆书家署名、分舵、TF 级别与学习目标。数据脱敏发布，单文件架构，离线可用。</p>'
+    +'<div class="kpis">'
+    +'<span class="kpi"><b>'+STATS.books+'</b>本书</span>'
+    +'<span class="kpi"><b>'+STATS.booksWithMemoirs+'</b>本有拆页</span>'
+    +'<span class="kpi"><b>'+STATS.memoirs+'</b>拆页</span>'
+    +'<span class="kpi"><b>'+STATS.riaFull+'</b>RIA完整拆页</span>'
+    +'<span class="kpi"><b>'+STATS.chaishujia+'</b>拆书家</span>'
+    +'<span class="kpi"><b>'+STATS.clubs+'</b>分舵</span>'
+    +'</div>'
+    +'<div class="riatab"><span class="rr">R 原文</span><span class="ri">I 讲解</span><span class="ra">A 促动</span></div></div>'
+    +'<div class="filters"><button class="btn'+(st.has?' on':'')+'" id="f-has">有拆页</button>'
+    +'<button class="btn'+(st.ria?' on':'')+'" id="f-ria">RIA 完整</button>'
+    +'<button class="btn'+(st.cov?' on':'')+'" id="f-cov">有封面</button>'
+    +'<span style="font-size:12px;color:var(--t3)">共 '+filtered().length+' 本</span></div>'
+    +'<div class="grid" id="grid"></div><div id="pager"></div>';
+  main.innerHTML=html;
+  wireFilters();
+  renderGrid()}
+function wireFilters(){
+  ['f-has','f-ria','f-cov'].forEach(function(id,k){
+    var key=['has','ria','cov'][k],el=document.getElementById(id);
+    if(el)el.onclick=function(){st[key]=!st[key];st.page=1;showHome()}})}
+function renderGrid(){
+  var list=filtered(),kw=st.q.trim();
+  var pages=Math.max(1,Math.ceil(list.length/st.PER));
+  if(st.page>pages)st.page=pages;
+  var slice=list.slice((st.page-1)*st.PER,st.page*st.PER);
+  var g=document.getElementById('grid');
+  g.innerHTML=slice.map(function(b){
+    var cov=b.cov?'<img loading="lazy" src="'+coverUrl(b.id)+'" alt="'+esc(b.title)+'" onerror="this.parentNode.innerHTML=\'<div class=covph>'+esc(b.title)+'</div>\'">'
+                 :'<div class="covph">'+esc(b.title)+'</div>';
+    return '<div class="bcard" onclick="location.hash=\'book/'+b.id+'\'"><div class="covwrap">'+cov+'</div>'
+      +'<div class="bmeta"><div class="t">'+hl(b.title,kw)+'</div><div class="a">'+esc(b.author||'佚名')+'</div>'
+      +'<div class="badges">'+(b.nc?'<span class="bdg nc">'+b.nc+' 拆页</span>':'<span class="bdg">无拆页</span>')
+      +(b.ria?'<span class="bdg ria">RIA</span>':'')+(b.lv?'<span class="bdg">'+esc(b.lv)+'</span>':'')
+      +((b.tags&&b.tags[0])?'<span class="bdg">'+esc(b.tags[0])+'</span>':'')+'</div></div></div>'}).join('');
+  var p=document.getElementById('pager');
+  if(pages>1){p.innerHTML='<div class="pager"><button class="btn" id="pp"'+(st.page<=1?' disabled':'')+'>‹ 上一页</button>'
+    +'第 '+st.page+' / '+pages+' 页'
+    +'<button class="btn" id="pn"'+(st.page>=pages?' disabled':'')+'>下一页 ›</button></div>';
+    document.getElementById('pp').onclick=function(){st.page--;renderGrid();scrollTo({top:0})};
+    document.getElementById('pn').onclick=function(){st.page++;renderGrid();scrollTo({top:0})}}
+  else p.innerHTML=''}
+
+// ---------- 书详情 ----------
+function showBook(bid,openMid){
+  var b=BYID[bid];
+  if(!b){main.innerHTML='<div class="err">找不到这本书：'+esc(bid)+' <a href="#" onclick="location.hash=\'\';return false">返回首页</a></div>';return}
+  main.innerHTML='<div class="loading">加载拆页数据…</div>';
+  loadBook(bid).then(function(bd){
+    st.view='book';st.book=bd;st.shown=24;
+    document.title=b.title+' · chailive';
+    renderBook(openMid?Number(openMid):null);
+  },function(e){main.innerHTML='<div class="err">'+esc(e.message)+'</div>'})}
+function renderBook(focusMid){
+  var bd=st.book,b=bd.book,kw='';
+  var html='<div class="back"><button class="btn" onclick="location.hash=\'\'">← 返回书架</button></div>'
+    +'<div class="bkhead"><div class="cov">'+(b.cov?'<img src="'+coverUrl(b.id)+'" alt="">':'<div class="covph">'+esc(b.title)+'</div>')+'</div>'
+    +'<div class="bkinfo"><h2>'+esc(b.title)+'</h2>'
+    +'<div class="sub">'+esc([b.author,b.translator,b.publisher,b.pubdate].filter(Boolean).join(' · ')||'佚名')+'</div>'
+    +'<div class="tagrow">'+(b.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')
+    +(b.lv?'<span class="tag">'+esc(b.lv)+'</span>':'')+'</div>'
+    +'<div class="badges" style="margin-top:8px"><span class="bdg nc">'+bd.n+' 拆页</span>'
+    +(bd.np>1?'<span class="bdg">'+bd.np+' 个数据分片</span>':'')+'</div></div></div>'
+    +'<div id="mlist"></div><div id="mpager"></div>';
+  main.innerHTML=html;
+  renderMList(focusMid)}
+function renderMList(focusMid){
+  var bd=st.book,bd2=bd,idx=bd.idx;
+  var total=idx.length,shown=Math.min(st.shown,total);
+  var html='';
+  for(var i=0;i<shown;i++){
+    var e=idx[i];
+    html+='<div class="mcard" data-i="'+i+'"><div class="mhead" onclick="var mc=this.parentNode;if(mc.classList.contains(\'open\')){mc.classList.remove(\'open\')}else{window.__cflExpand(mc)}">'
+      +'<span class="no">#'+(i+1)+'</span><span class="topic">'+esc(e.t||'(未命名)')+'</span>'
+      +(e.l?'<span class="lv">'+esc(e.l)+'</span>':'')+'</div><div class="mbody" data-i="'+i+'"></div></div>'}
+  var box=document.getElementById('mlist');box.innerHTML=html;
+  var pg=document.getElementById('mpager');
+  if(shown<total){pg.innerHTML='<button class="loadmore" id="lm">展开更多（已显示 '+shown+' / '+total+'）</button>';
+    document.getElementById('lm').onclick=function(){st.shown+=48;renderMList()}}
+  else pg.innerHTML='';
+  window.__cflExpand=function(mc){
+    var i=Number(mc.getAttribute('data-i')),body=mc.querySelector('.mbody');
+    if(body.innerHTML){mc.classList.add('open');return}
+    var e=idx[i],pi=findPart(bd,e.i);
+    loadMemoirPart(bd,pi).then(function(){
+      var data=pi===1?bd.ms:(window.CHAI_PD||{})[bd.book.id+'_'+pi];
+      var m=null;if(data)for(var k=0;k<data.length;k++)if(data[k].id===e.i){m=data[k];break}
+      body.innerHTML=m?memoirBody(m):'<div class="err">拆页数据缺失</div>';
+      mc.classList.add('open');
+      if(m&&m.learn_goal)body.scrollIntoView({behavior:'smooth',block:'nearest'});
+    },function(){body.innerHTML='<div class="err">分片加载失败</div>';mc.classList.add('open')})};
+  if(focusMid!=null){
+    for(var j=0;j<idx.length;j++)if(idx[j].i===focusMid){
+      if(j>=shown){st.shown=j+12;renderMList(focusMid);return}
+      var card=box.querySelector('.mcard[data-i="'+j+'"]');
+      if(card){window.__cflExpand(card);card.scrollIntoView({behavior:'smooth',block:'start'})}
+      break}}}
+function memoirBody(m){
+  var flags=m.flags||{},chips='';
+  ['r','i','a','a1','a2','a3'].forEach(function(k){if(flags[k])chips+='<span class="bdg">'+esc(k.toUpperCase())+'</span>'});
+  var full=(flags.r&&flags.i&&flags.a&&flags.a1&&flags.a2&&flags.a3)?'<span class="ria-full">RIA 完整</span>':'';
+  var meta=[];
+  if(m.chaishujia)meta.push('拆书家 '+m.chaishujia.username+(m.chaishujia.city?'（'+m.chaishujia.city+'）':''));
+  if(m.club)meta.push(m.club.name+(m.club.city?'·'+m.club.city:''));
+  if(m.level)meta.push(m.level);
+  if(m.duration)meta.push(m.duration+' 分钟');
+  return '<div class="mmeta">'+esc(meta.join(' · '))+'</div>'
+    +(m.learn_goal?'<div class="goal"><b>学习目标</b>：'+esc(m.learn_goal)+'</div>':'')
+    +(m.prologue?'<div class="sect"><div class="ric" style="color:var(--t2);font-size:13px">'+esc(m.prologue)+'</div></div>':'')
+    +(m.quote?'<div class="sect"><div class="sR"><h4>R · 原文</h4></div><div class="ric">'+m.quote+'</div></div>':'')
+    +(m.explains?'<div class="sect"><div class="sI"><h4>I · 讲解</h4></div><div class="ric">'+m.explains+'</div></div>':'')
+    +(m.interaction?'<div class="sect"><div class="sA"><h4>A · 促动</h4></div><div class="ric">'+m.interaction+'</div></div>':'')
+    +(chips?'<div class="badges" style="padding-bottom:10px">'+full+chips+'</div>':'')}
+
+// ---------- 深度检索（topics.js 懒加载，全局搜 19262 拆页主题）----------
+function topicSearch(kw){
+  st.view='topics';
+  main.innerHTML='<div class="loading">加载全局拆页主题索引…</div>';
+  loadTopicIndex().then(function(T){
+    kw=kw.trim().toLowerCase();
+    var hits=kw?T.filter(function(t){return (t.t||'').toLowerCase().indexOf(kw)>=0||(t.b||'').toLowerCase().indexOf(kw)>=0}):[];
+    document.title='检索「'+kw+'」· chailive';
+    if(!hits.length){main.innerHTML='<div class="back"><button class="btn" onclick="location.hash=\'\'">← 返回书架</button></div><div class="empty">'+(kw?'没有匹配「'+esc(kw)+'」的拆页':'输入关键词检索全部 '+T.length+' 个拆页主题')+'</div>';return}
+    var html='<div class="back"><button class="btn" onclick="location.hash=\'\'">← 返回书架</button></div>'
+      +'<p style="color:var(--t3);font-size:12.5px">全局命中 '+hits.length+' 个拆页主题（前 100 条）</p>';
+    hits.slice(0,100).forEach(function(t){
+      html+='<div class="trow" onclick="location.hash=\'book/'+t.b+'\''+'"><span class="tt">'+hl(t.t,kw)+'</span>'
+        +'<span class="tb">'+esc(t.b)+'</span>'+(t.l?'<span class="tl">'+esc(t.l)+'</span>':'')+'</div>'});
+    main.innerHTML=html;
+  },function(e){main.innerHTML='<div class="err">'+esc(e.message)+'</div>'})}
+
+// ---------- 顶栏接线 ----------
+q.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    var v=q.value.trim();
+    if(st.view==='book'||st.view==='topics')location.hash='ts='+encodeURIComponent(v);
+    else{st.q=v;st.page=1;showHome()}}});
+q.addEventListener('input',function(){
+  if(st.view!=='home')return;
+  st.q=q.value;st.page=1;
+  renderGrid();
+  var cnt=document.querySelector('.filters span');
+  if(cnt)cnt.textContent='共 '+filtered().length+' 本'});
+['f-has','f-ria','f-cov'].forEach(function(id,k){
+  var key=['has','ria','cov'][k],el=document.getElementById(id);
+  el.onclick=function(){st[key]=!st[key];st.page=1;
+    if(st.view!=='home'){location.hash=''}else showHome()}});
+
+// ---------- 启动 ----------
+route();
+function route(){
+  marks=[];
+  var h0=location.hash;
+  if(h0.indexOf('#book/')===0){var p=h0.slice(6).split('/');return showBook(p[0],p[1])}
+  if(h0.indexOf('#ts=')===0){q.value=decodeURIComponent(h0.slice(4));return topicSearch(q.value)}
+  q.value=st.q;showHome()}
+window.addEventListener('hashchange',route);
+})();
+</script>
+</body>
+</html>
