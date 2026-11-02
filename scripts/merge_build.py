@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""chai-for-live 汇聚构建器（reducer = loong-dev）。
+"""chailive 汇聚构建器（reducer = loong-dev）。
 
 输入：/tmp/octopus/cfl-work/outs/shard{0..N}/（各节点回传的 clean/*.json + summary.json）
-输出：/root/chai-for-live/{index.html, data/<bookId>.js, stats.json, build.json}
+输出：/root/chailive/{index.html, data/<bookId>.js, stats.json, build.json}
 
 职责：
   1. 收块校验：逐文件 md5 对账 summary.out_md5；计数断言（1713 文件 / 19262 拆页）
@@ -26,7 +26,7 @@ def sha(s):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--work", default="/tmp/octopus/cfl-work")
-    ap.add_argument("--out", default="/root/chai-for-live")
+    ap.add_argument("--out", default="/root/chailive")
     ap.add_argument("--books", default="/root/chaishu-hot/raw/books.json")
     ap.add_argument("--covers", default="/root/chaishu-hot/raw/covers-report.json")
     ap.add_argument("--expect-files", type=int, default=1713)

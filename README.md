@@ -1,8 +1,8 @@
-# chai-for-live · 拆书为生
+# chailive · 拆学习
 
 RIA 便签读书法全库：**2255 本书 / 1713 本有拆页 / 19262 个拆页**，单文件架构、零外部依赖、双击即开、离线可用。
 
-- 在线阅读：https://kenyanghui.github.io/chai-for-live/
+- 在线阅读：https://kenyanghui.github.io/chailive/
 - RIA 三段卡：R 原文 / I 讲解 / A 促动（+ a1/a2/a3 flags）
 - 全局深度检索：19262 拆页主题懒加载索引
 - 大书自动分片（《非暴力沟通》2153 拆页也不例外）

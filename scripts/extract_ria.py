@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""chai-for-live 节点端 RIA 提取器（纯 stdlib，确定性，无网络）。
+"""chailive 节点端 RIA 提取器（纯 stdlib，确定性，无网络）。
 
 输入：解包的 shard 目录（data/*.json + manifest.json + extract_ria.py）
 输出：out/clean/*.json（脱敏后的 RIA 结构）+ out/summary.json（自校验报告）

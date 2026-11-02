@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""chai-for-live 矩阵切分器：把 chaishu-hot raw 拆页按体积贪心装箱成 N 片，打包分发。
+"""chailive 矩阵切分器：把 chaishu-hot raw 拆页按体积贪心装箱成 N 片，打包分发。
 
 每片 tar.gz 内含：data/*.json（拆页原始文件）+ extract_ria.py（节点端提取器）+ manifest.json。
 节点解包后只需 python3（纯 stdlib），跑完回传 out 片 tar.gz。

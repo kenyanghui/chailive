@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# chai-for-live 单节点派发器：pkg 上行 -> 节点提取 -> out 回传解包 -> 节点清场
+# chailive 单节点派发器：pkg 上行 -> 节点提取 -> out 回传解包 -> 节点清场
 # 用法: dispatch_one.sh <ssh-target> <shardN>
 set -euo pipefail
 SSH="$1"; N="$2"

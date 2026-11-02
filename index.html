@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="chai-for-live · 拆书为生：2255 本书、19262 个拆页，RIA 便签读书法全库。单文件、零依赖、可离线阅读。">
-<title>chai-for-live · 拆书为生</title>
+<meta name="description" content="chailive · 拆学习：2255 本书、19262 个拆页，RIA 便签读书法全库。单文件、零依赖、可离线阅读。">
+<title>chailive · 拆学习</title>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
@@ -140,7 +140,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 </head>
 <body>
 <header class="bar">
-  <h1 id="home">chai-for-live<small>拆书为生</small></h1>
+  <h1 id="home">chailive<small>拆学习</small></h1>
   <input id="q" type="search" placeholder="搜书名 / 作者 / 标签，回车全局搜拆页主题" autocomplete="off">
   <button class="btn" id="f-has">有拆页</button>
   <button class="btn" id="f-ria">RIA 完整</button>
@@ -152,7 +152,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 </head>
 <body>
 <header class="bar">
-  <h1 id="home">chai-for-live<small>拆书为生</small></h1>
+  <h1 id="home">chailive<small>拆学习</small></h1>
   <input id="q" type="search" placeholder="搜书名 / 作者 / 标签，回车全局搜拆页主题" autocomplete="off">
   <button class="btn" id="f-has">有拆页</button>
   <button class="btn" id="f-ria">RIA 完整</button>
@@ -246,9 +246,9 @@ function memoirRow(bd,idxEntry,pi){
 
 // ---------- 首页 ----------
 function showHome(){
-  st.view='home';document.title='chai-for-live · 拆书为生';
+  st.view='home';document.title='chailive · 拆学习';
   var kws=st.q.trim();
-  var html='<div class="hero"><h2>拆书为生 · RIA 全库</h2>'
+  var html='<div class="hero"><h2>拆学习 · RIA 全库</h2>'
     +'<p>把 <b>'+STATS.books+'</b> 本书的 <b>'+STATS.memoirs+'</b> 个拆页装进口袋：RIA 便签读书法（R 原文 / I 讲解 / A 促动）完整呈现，含拆书家署名、分舵、TF 级别与学习目标。数据脱敏发布，单文件架构，离线可用。</p>'
     +'<div class="kpis">'
     +'<span class="kpi"><b>'+STATS.books+'</b>本书</span>'
@@ -300,7 +300,7 @@ function showBook(bid,openMid){
   main.innerHTML='<div class="loading">加载拆页数据…</div>';
   loadBook(bid).then(function(bd){
     st.view='book';st.book=bd;st.shown=24;
-    document.title=b.title+' · chai-for-live';
+    document.title=b.title+' · chailive';
     renderBook(openMid?Number(openMid):null);
   },function(e){main.innerHTML='<div class="err">'+esc(e.message)+'</div>'})}
 function renderBook(focusMid){
@@ -371,7 +371,7 @@ function topicSearch(kw){
   loadTopicIndex().then(function(T){
     kw=kw.trim().toLowerCase();
     var hits=kw?T.filter(function(t){return (t.t||'').toLowerCase().indexOf(kw)>=0||(t.b||'').toLowerCase().indexOf(kw)>=0}):[];
-    document.title='检索「'+kw+'」· chai-for-live';
+    document.title='检索「'+kw+'」· chailive';
     if(!hits.length){main.innerHTML='<div class="back"><button class="btn" onclick="location.hash=\'\'">← 返回书架</button></div><div class="empty">'+(kw?'没有匹配「'+esc(kw)+'」的拆页':'输入关键词检索全部 '+T.length+' 个拆页主题')+'</div>';return}
     var html='<div class="back"><button class="btn" onclick="location.hash=\'\'">← 返回书架</button></div>'
       +'<p style="color:var(--t3);font-size:12.5px">全局命中 '+hits.length+' 个拆页主题（前 100 条）</p>';
