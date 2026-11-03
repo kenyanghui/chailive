@@ -22,6 +22,10 @@ def sha(b):
 
 def main():
     chs = {c["id"]: c for c in json.loads((CH_DIR / "chapters.json").read_text())}
+    mods_src = json.loads((CH_DIR / "modules.json").read_text())
+    _seen = [cid for m in mods_src for cid in m["chs"]]
+    if len(_seen) != len(set(_seen)) or set(_seen) != set(chs):
+        sys.exit(f"modules.json 归组对账失败: chapters={len(chs)} grouped={len(_seen)} uniq={len(set(_seen))}")
     bc = {x["id"]: x["ch"] for x in json.loads((CH_DIR / "book_chapters.json").read_text())}
     bt = {b["id"]: b.get("t", "") for b in json.loads(META.read_text())}
 
@@ -54,8 +58,17 @@ def main():
         {"id": cid, "name": chs[cid]["name"], "desc": chs[cid].get("desc", ""), "n": ch_cnt.get(cid, 0)}
         for cid in sorted(chs)
     ]
+    mods_out = [
+        {
+            "id": m["id"], "name": m["name"], "hook": m.get("hook", ""),
+            "chs": m["chs"],
+            "n": sum(ch_cnt.get(cid, 0) for cid in m["chs"]),
+        }
+        for m in mods_src
+    ]
     blob = (
         "window.CHAI_CHAPTERS=" + json.dumps(chapters_out, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c") + ";"
+        + "window.CHAI_MODS=" + json.dumps(mods_out, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c") + ";"
         + "window.CHAI_CARDS=" + json.dumps(cards, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c") + ";"
     )
     (OUT / "data" / "chapters.js").write_text(blob)
@@ -66,7 +79,8 @@ def main():
     b["hashes"]["data/chapters.js"] = sha((OUT / "data" / "chapters.js").read_bytes())
     b["hashes"]["index.html"] = sha((OUT / "index.html").read_bytes())
     bj.write_text(json.dumps(b, ensure_ascii=False, indent=1))
-    print(f"cards {len(cards)} across {len(chapters_out)} chapters; chapters.js {len(blob)/1e6:.2f}MB")
+    print(f"cards {len(cards)} across {len(chapters_out)} chapters / {len(mods_out)} modules; chapters.js {len(blob)/1e6:.2f}MB")
+    print("modules:", {m["id"]: m["n"] for m in mods_out}, "sum:", sum(m["n"] for m in mods_out))
     print("grade:", Counter(c["g"] for c in cards).most_common())
     print("remark covered:", sum(1 for c in cards if c["r"]), "| ria:", sum(c["x"] for c in cards))
 

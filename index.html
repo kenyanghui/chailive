@@ -59,6 +59,42 @@ button.tobooks{margin-left:auto}
 .toc a.on{background:var(--brand-soft);color:var(--brand-1);font-weight:650}
 .toc a .n{font-size:11px;color:var(--t3);font-variant-numeric:tabular-nums;flex:none}
 .toc a.on .n{color:var(--brand-1)}
+.toc .tg{margin:9px 0 2px}
+.toc .tg-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:7px 10px;border-radius:8px;
+  color:var(--t1);font-weight:700;font-size:13.5px;cursor:pointer}
+.toc .tg-h:hover{background:var(--bg-mute)}
+.toc .tg-h.on{background:var(--brand-soft);color:var(--brand-1)}
+.toc .tg-h .n{font-size:11px;color:var(--t3);font-variant-numeric:tabular-nums;flex:none}
+.toc .tg-h.on .n{color:var(--brand-1)}
+.toc a.sub{padding:4px 10px 4px 20px;font-size:12.5px;color:var(--t3)}
+
+/* ---- 模块入口（首页） ---- */
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin:20px 0 6px}
+.modc{border:1px solid var(--divider);border-radius:14px;background:var(--bg-elv);padding:17px 17px 14px;cursor:pointer;
+  transition:border-color .15s,transform .15s;position:relative}
+.modc:hover{border-color:var(--brand-2);transform:translateY(-1px)}
+.modc .mn{font-size:17px;font-weight:750;color:var(--t1);padding-right:64px}
+.modc .mh{font-size:13px;color:var(--t3);margin:4px 0 11px}
+.modc .mc-chips{display:flex;flex-wrap:wrap;gap:6px}
+.modc .mchip{font-size:11px;color:var(--t2);background:var(--bg-mute);border-radius:99px;padding:2.5px 9px}
+.modc .mn2{position:absolute;top:15px;right:15px;font-size:11px;color:var(--brand-1);font-weight:700;
+  background:var(--brand-soft);border-radius:99px;padding:3px 10px;font-variant-numeric:tabular-nums}
+
+/* ---- 模块连读：章跳转 chips + 面包屑 ---- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 16px}
+.chip{font-size:12px;color:var(--t2);background:var(--bg-mute);border-radius:99px;padding:4px 11px;cursor:pointer;
+  border:0;font-family:inherit;font-variant-numeric:tabular-nums}
+.chip:hover{color:var(--brand-1);background:var(--brand-soft)}
+.bc{font-size:12.5px;color:var(--t3);margin:10px 0 0}
+.bc a{color:var(--brand-1);text-decoration:none;cursor:pointer}
+.bc a:hover{text-decoration:underline}
+.chip.on{color:var(--brand-1);background:var(--brand-soft);font-weight:650}
+.modband{margin:26px 0 8px;padding:10px 14px;background:var(--brand-soft);border-radius:10px;
+  font-weight:700;color:var(--brand-1);font-size:14.5px;scroll-margin-top:calc(var(--bar) + 8px)}
+.modband:first-child{margin-top:4px}
+.modband .n{font-weight:500;font-size:12px;color:var(--t3);margin-left:10px}
+.toc .tg a.sub{display:none}
+.toc .tg.open a.sub{display:flex}
 .stream{flex:1;min-width:0;padding:20px 26px 80px}
 .loading,.empty{color:var(--t3);padding:40px;text-align:center;font-size:14px}
 
@@ -94,6 +130,40 @@ button.tobooks{margin-left:auto}
 mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .hnt{font-size:11px;color:var(--t3);padding:6px 0 0}
 
+/* ---- AI 助手 ---- */
+#aiFab{position:fixed;right:18px;bottom:64px;height:38px;padding:0 16px;border-radius:99px;border:1px solid var(--brand-2);
+  background:var(--brand-1);color:#fff;font:13.5px var(--font);font-weight:650;cursor:pointer;z-index:45;
+  box-shadow:0 2px 12px rgba(0,0,0,.15)}
+#aiFab:hover{filter:brightness(1.08)}
+#aiPanel{position:fixed;right:18px;bottom:110px;width:372px;max-width:calc(100vw - 24px);height:500px;max-height:calc(100vh - 130px);
+  display:none;flex-direction:column;border:1px solid var(--divider);border-radius:14px;background:var(--bg-elv);
+  z-index:46;box-shadow:0 8px 32px rgba(0,0,0,.18);overflow:hidden}
+#aiPanel.show{display:flex}
+.ai-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--divider);
+  background:var(--brand-soft)}
+.ai-hd b{font-size:14px;color:var(--brand-1)}
+.ai-hd .x{cursor:pointer;color:var(--t3);font-size:16px;padding:0 4px}
+.ai-hd .x:hover{color:var(--t1)}
+.ai-tip{font-size:11px;color:var(--t3);padding:6px 14px;border-bottom:1px solid var(--divider);line-height:1.5}
+#aiMsgs{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}
+.ai-m{max-width:88%;padding:9px 12px;border-radius:11px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.ai-m.u{align-self:flex-end;background:var(--brand-soft);color:var(--t1)}
+.ai-m.a{align-self:flex-start;background:var(--bg-mute);color:var(--t1)}
+.ai-m.a .cit{display:inline-block;min-width:16px;text-align:center;margin:0 1px;padding:0 4px;border-radius:6px;
+  background:var(--brand-soft);color:var(--brand-1);font-size:11px;font-weight:700;cursor:default}
+.ai-refs{align-self:flex-start;display:flex;flex-wrap:wrap;gap:5px;max-width:100%}
+.ai-ref{font-size:11px;color:var(--brand-1);background:var(--brand-soft);border:1px solid var(--divider);
+  border-radius:8px;padding:2px 8px;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-ref:hover{border-color:var(--brand-2)}
+.ai-m.err{align-self:flex-start;background:transparent;border:1px dashed var(--divider);color:var(--t3)}
+#aiForm{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--divider)}
+#aiQ{flex:1;height:36px;border:1px solid var(--divider);border-radius:9px;background:var(--bg);color:var(--t1);
+  padding:0 11px;font:13.5px var(--font);outline:none}
+#aiQ:focus{border-color:var(--brand-2)}
+#aiForm button{height:36px;padding:0 16px;border:none;border-radius:9px;background:var(--brand-1);color:#fff;
+  font:13.5px var(--font);font-weight:650;cursor:pointer}
+#aiForm button:disabled{opacity:.5;cursor:wait}
+
 @media (max-width:860px){
   .toc{display:none}
   .stream{padding:14px 12px 70px}
@@ -124,33 +194,45 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   <main class="stream" id="stream"><div class="loading">加载中…</div></main>
 </div>
 <button id="top" title="回到顶部">↑</button>
+<button id="aiFab">✨ 问我</button>
+<div id="aiPanel">
+  <div class="ai-hd"><b>AI 拆书助手</b><span class="x" id="aiClose">✕</span></div>
+  <div class="ai-tip">基于本站 19262 张拆页卡片回答。点回答里的 <span class="cit">1</span> 可跳到对应卡片。</div>
+  <div id="aiMsgs"></div>
+  <form id="aiForm"><input id="aiQ" type="text" placeholder="问问看：怎么跟青春期孩子说话？" autocomplete="off"><button id="aiGo" type="submit">发送</button></form>
+</div>
 <script src="data/chapters.js"></script>
 <script>
 (function(){
 "use strict";
-var CHAPS=window.CHAI_CHAPTERS||[], CARDS=window.CHAI_CARDS||[];
+var CHAPS=window.CHAI_CHAPTERS||[], CARDS=window.CHAI_CARDS||[], MODS=window.CHAI_MODS||[];
 var toc=document.getElementById('toc'), stream=document.getElementById('stream'), q=document.getElementById('q');
-var st={mode:'all',q:'',ch:null,filtered:null};
+var st={mode:'all',q:'',ch:null,mod:null,all:false,filtered:null};
 var loaded={}, PD=window.CHAI_PD=window.CHAI_PD||{};
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function hl(s,kw){s=esc(s);if(!kw)return s;try{return s.replace(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),function(m){return '<mark>'+m+'</mark>'})}catch(e){return s}}
+function modOf(chid){for(var i=0;i<MODS.length;i++)if(MODS[i].chs.indexOf(chid)>=0)return MODS[i];return null}
+function modById(id){for(var i=0;i<MODS.length;i++)if(MODS[i].id===id)return MODS[i];return null}
+function chapById(id){for(var i=0;i<CHAPS.length;i++)if(CHAPS[i].id===id)return CHAPS[i];return null}
 function applyTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem('cfl-theme',t)}
 applyTheme(localStorage.getItem('cfl-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
 document.getElementById('theme').onclick=function(){applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')};
-document.getElementById('home').onclick=function(){location.hash='';render()};
-window.__clAll=function(){st.ch=null;render()};
+document.getElementById('home').onclick=function(){location.hash=''};
+window.__clAll=function(){location.hash='all'};
+function go(h){if(location.hash===h)route();else location.hash=h}
+window.addEventListener('hashchange',route);
 window.addEventListener('scroll',function(){document.getElementById('top').style.display=scrollY>600?'block':'none'});
 document.getElementById('top').onclick=function(){scrollTo({top:0,behavior:'smooth'})};
 Array.prototype.forEach.call(document.querySelectorAll('.mode'),function(b){
   b.onclick=function(){
     st.mode=b.dataset.m;st.modeLabel=b.textContent;
     Array.prototype.forEach.call(document.querySelectorAll('.mode'),function(x){x.classList.toggle('on',x===b)});
-    render();
+    if(st.q||st.mode!=='all')renderFilteredFlat();else route();
   };
 });
 document.querySelector('.mode[data-m="all"]').classList.add('on');
-q.addEventListener('input',function(){st.q=q.value.trim();render()});
+q.addEventListener('input',function(){st.q=q.value.trim();if(st.q)renderFilteredFlat();else route()});
 
 // ---------- 过滤 ----------
 function pass(c){
@@ -166,16 +248,49 @@ function computeFiltered(){
   st.filtered=CARDS.filter(pass);
 }
 
-// ---------- TOC ----------
+// ---------- TOC（按模块分组） ----------
 var tocLinks=[];
 function buildToc(){
-  var h='<div class="brand">拆生活指南<br>'+CHAPS.length+' 章 · '+CARDS.length+' 张拆页卡片</div>';
-  CHAPS.forEach(function(c,i){
-    h+='<a href="#c-'+c.id+'" data-id="'+c.id+'"><span>'+esc(c.name)+'</span><span class="n">'+c.n+'</span></a>';
+  var h='<div class="brand">拆生活指南<br>'+MODS.length+' 个兴趣模块 · '+CHAPS.length+' 章 · '+CARDS.length+' 张拆页卡片</div>';
+  h+='<a href="#all" data-id="__all"><span>全部章节</span><span class="n">'+CARDS.length+'</span></a>';
+  MODS.forEach(function(mo){
+    h+='<div class="tg" data-mg="'+mo.id+'"><div class="tg-h" data-id="'+mo.id+'"><span>'+esc(mo.name)+'</span><span class="n">'+mo.n+'</span></div>';
+    mo.chs.forEach(function(cid){
+      var c=chapById(cid);
+      if(c)h+='<a class="sub" href="#c-'+cid+'" data-id="'+cid+'"><span>'+esc(c.name)+'</span><span class="n">'+c.n+'</span></a>';
+    });
+    h+='</div>';
   });
   toc.innerHTML=h;
-  tocLinks=[].slice.call(toc.querySelectorAll('a'));
-  tocLinks.forEach(function(a){a.onclick=function(e){e.preventDefault();st.ch=a.dataset.id;showChapter()}});
+  var allLink=toc.querySelector('a[data-id="__all"]');
+  allLink.onclick=function(e){e.preventDefault();go('#all')};
+  tocLinks=[].slice.call(toc.querySelectorAll('a.sub'));
+  tocLinks.forEach(function(a){a.onclick=function(e){e.preventDefault();go('#c-'+a.dataset.id)}});
+  [].slice.call(toc.querySelectorAll('.tg-h')).forEach(function(tg){
+    tg.onclick=function(e){
+      var box=tg.parentNode;
+      if(st.view==='mod'&&st.mod===tg.dataset.id){box.classList.toggle('open');return}
+      box.classList.add('open');
+      go('#m-'+tg.dataset.id);
+    };
+  });
+}
+function tocSync(){
+  var allLink=toc.querySelector('a[data-id="__all"]');
+  if(allLink)allLink.classList.toggle('on',st.view==='all');
+  [].slice.call(toc.querySelectorAll('.tg')).forEach(function(tg){
+    var id=tg.dataset.mg;
+    var moOn=st.view==='mod'&&st.mod===id;
+    var chOn=false;
+    [].slice.call(tg.querySelectorAll('a.sub')).forEach(function(a){
+      var on=st.view==='chap'&&st.ch===a.dataset.id;
+      a.classList.toggle('on',on);
+      if(on)chOn=true;
+    });
+    var hd=tg.querySelector('.tg-h');
+    if(hd)hd.classList.toggle('on',moOn);
+    if(moOn||chOn)tg.classList.add('open');
+  });
 }
 
 // ---------- 渲染 ----------
@@ -194,42 +309,115 @@ function cardHTML(c,idx){
     +'</div></div>';
   return h;
 }
-function render(){
+function cardsFor(chid){return CARDS.filter(function(c){return pass(c)&&c.c===chid})}
+function renderFilteredFlat(){
+  st.view='search';
   computeFiltered();
-  if(st.filtered.length===CARDS.length&&!st.q&&st.mode==='all'){
-    // 全量视图：31 章全渲染（分组），一次 innerHTML（19262 卡 OK）
-    var h='',i=0;
-    CHAPS.forEach(function(cp){
-      var cards=st.filtered.filter(function(c){return c.c===cp.id});
-      if(!cards.length)return;
-      h+='<section class="chap" id="c-'+cp.id+'"><div class="cid">'+esc(cp.id.toUpperCase())+'</div><h2>'+esc(cp.name)+'</h2><p class="cdesc">'+esc(cp.desc||'')+'</p></section>';
-      cards.forEach(function(c){h+=cardHTML(c,++i)});
-    });
-    stream.innerHTML=h;
-  }else{
-    // 过滤视图：平铺 + 计数
-    var h='<section class="chap"><div class="cid">FILTER</div><h2>'+(st.q?'「'+esc(st.q)+'」':'筛选结果')+'</h2><p class="cdesc">'+st.filtered.length+' 张卡片 · '+st.modeLabel+'</p></section>';
-    st.filtered.slice(0,2000).forEach(function(c,j){h+=cardHTML(c,j+1)});
-    if(st.filtered.length>2000)h+='<div class="empty">仅显示前 2000 张，请缩小范围</div>';
-    if(!st.filtered.length)h='<div class="empty">没有匹配的卡片</div>';
-    stream.innerHTML=h;
-  }
+  var h='<section class="chap"><div class="cid">FILTER</div><h2>'+(st.q?'「'+esc(st.q)+'」':'筛选结果')+'</h2><p class="cdesc">'+st.filtered.length+' 张卡片 · '+st.modeLabel+'</p></section>';
+  st.filtered.slice(0,2000).forEach(function(c,j){h+=cardHTML(c,j+1)});
+  if(st.filtered.length>2000)h+='<div class="empty">仅显示前 2000 张，请缩小范围</div>';
+  if(!st.filtered.length)h='<div class="empty">没有匹配的卡片</div>';
+  stream.innerHTML=h;
+  tocSync();
 }
-st.modeLabel='全部';
-// ---------- 单章视图 ----------
-function showChapter(){
-  var cp=null;
-  CHAPS.forEach(function(c){if(c.id===st.ch)cp=c});
-  tocLinks.forEach(function(a){a.classList.toggle('on',a.dataset.id===st.ch)});
-  if(!cp){render();return}
+function showHome(){
+  var h='<section class="chap"><div class="cid">CHAILIVE</div><h1>拆生活指南</h1><p class="cdesc">不按书架，按生活分——挑一个你此刻关心的模块进去读。'+CHAPS.length+' 个主题章 · '+CARDS.length+' 张拆页卡片，都能按兴趣连着看。</p></section>';
+  h+='<div class="mods">';
+  MODS.forEach(function(mo){
+    h+='<div class="modc" data-m="'+mo.id+'"><div class="mn">'+esc(mo.name)+'</div><div class="mh">'+esc(mo.hook||'')+'</div><div class="mc-chips">';
+    mo.chs.forEach(function(cid){var cp=chapById(cid);if(cp)h+='<span class="mchip">'+esc(cp.name)+'</span>'});
+    h+='</div><div class="mn2">'+mo.n+' 张</div></div>';
+  });
+  h+='</div>';
+  h+='<section class="chap" style="margin-top:34px"><div class="cid">BROWSE</div><h2>按章浏览</h2><p class="cdesc">31 个主题章，也可以单章跳读</p><div class="chips">';
+  CHAPS.forEach(function(cp){h+='<button class="chip" data-c="'+cp.id+'">'+esc(cp.name)+' '+cp.n+'</button>'});
+  h+='</div></section>';
+  stream.innerHTML=h;
+}
+function showMod(){
+  var mo=modById(st.mod);
+  if(!mo){showHome();return}
   var i=0;
-  var cards=CARDS.filter(function(c){return pass(c)&&c.c===st.ch});
-  var h='<section class="chap"><div class="cid">'+esc(cp.id.toUpperCase())+'</div><h2>'+esc(cp.name)+'</h2><p class="cdesc">'+esc(cp.desc||'')+'</p></section>';
-  cards.forEach(function(c){h+=cardHTML(c,++i)});
-  h+='<div class="empty">— 章完 · <a href="#" onclick="window.__clAll();return false" style="color:var(--brand-1)">查看全部章节</a> —</div>';
+  var h='<div class="bc"><a href="#" data-go="home">首页</a> › '+esc(mo.name)+'</div>';
+  h+='<section class="chap"><div class="cid">MODULE</div><h1>'+esc(mo.name)+'</h1><p class="cdesc">'+esc(mo.hook||'')+(mo.hook?' · ':'')+mo.n+' 张拆页卡片，按章连着读</p></section>';
+  h+='<div class="chips">';
+  mo.chs.forEach(function(cid){var cp=chapById(cid);if(cp)h+='<button class="chip" data-c="'+cid+'">'+esc(cp.name)+' '+cp.n+'</button>'});
+  h+='</div>';
+  mo.chs.forEach(function(cid){
+    var cp=chapById(cid);if(!cp)return;
+    h+='<div class="modband">'+esc(cp.name)+'<span class="n">'+cp.n+' 张</span></div>';
+    cardsFor(cid).forEach(function(c){h+=cardHTML(c,++i)});
+  });
+  h+='<div class="empty">— 模块完 · <a href="#" data-go="home" style="color:var(--brand-1)">回首页换一个模块</a> —</div>';
   stream.innerHTML=h;
   scrollTo({top:0});
 }
+function showChap(){
+  var cp=chapById(st.ch);
+  if(!cp){showHome();return}
+  var mo=modOf(cp.id);
+  var i=0;
+  var h='<div class="bc"><a href="#" data-go="home">首页</a>';
+  if(mo)h+=' › <a href="#" data-go="mod" data-m="'+mo.id+'">'+esc(mo.name)+'</a>';
+  h+=' › '+esc(cp.name)+'</div>';
+  h+='<section class="chap"><div class="cid">'+esc(cp.id.toUpperCase())+'</div><h1>'+esc(cp.name)+'</h1><p class="cdesc">'+esc(cp.desc||'')+'</p></section>';
+  if(mo&&mo.chs.length>1){
+    h+='<div class="chips">';
+    mo.chs.forEach(function(cid){
+      var c2=chapById(cid);if(!c2)return;
+      h+='<button class="chip'+(cid===cp.id?' on':'')+'" data-c="'+cid+'">'+esc(c2.name)+(cid===cp.id?'':' '+c2.n)+'</button>';
+    });
+    h+='</div>';
+  }
+  cardsFor(cp.id).forEach(function(c){h+=cardHTML(c,++i)});
+  if(mo){
+    var ix=mo.chs.indexOf(cp.id),nxt=ix>=0?mo.chs[ix+1]:null;
+    if(nxt){var nc=chapById(nxt);h+='<div class="empty">— 章完 · <a href="#" data-go="c" data-c="'+nxt+'" style="color:var(--brand-1)">下一章：'+esc(nc?nc.name:nxt)+' →</a> —</div>'}
+    else h+='<div class="empty">— 本模块读完了 · <a href="#" data-go="home" style="color:var(--brand-1)">回首页换一个模块</a> —</div>';
+  }else{
+    h+='<div class="empty">— 章完 · <a href="#" data-go="all" style="color:var(--brand-1)">查看全部章节</a> —</div>';
+  }
+  stream.innerHTML=h;
+  scrollTo({top:0});
+}
+function showAll(){
+  var i=0;
+  var h='<div class="bc"><a href="#" data-go="home">首页</a> › 全部章节</div>';
+  MODS.forEach(function(mo){
+    h+='<div class="modband" id="m-'+mo.id+'">'+esc(mo.name)+'<span class="n">'+esc(mo.hook||'')+'</span></div>';
+    mo.chs.forEach(function(cid){
+      var cp=chapById(cid);if(!cp)return;
+      h+='<section class="chap" id="c-'+cid+'"><div class="cid">'+esc(cid.toUpperCase())+'</div><h2>'+esc(cp.name)+'</h2><p class="cdesc">'+esc(cp.desc||'')+'</p></section>';
+      cardsFor(cid).forEach(function(c){h+=cardHTML(c,++i)});
+    });
+  });
+  stream.innerHTML=h;
+}
+function route(){
+  var hs=location.hash.replace(/^#/,'');
+  if(hs.indexOf('c-')===0&&chapById(hs.slice(2))){st.view='chap';st.ch=hs.slice(2);st.mod=null;showChap()}
+  else if(hs.indexOf('m-')===0&&modById(hs.slice(2))){st.view='mod';st.mod=hs.slice(2);st.ch=null;showMod()}
+  else if(hs==='all'){st.view='all';st.ch=null;st.mod=null;showAll()}
+  else{st.view='home';st.ch=null;st.mod=null;showHome()}
+  if(st.view==='all')scrollTo({top:0});
+  tocSync();
+}
+stream.addEventListener('click',function(e){
+  var el=e.target;
+  while(el&&el!==stream){
+    if(el.classList&&el.classList.contains('modc')&&el.dataset.m){go('#m-'+el.dataset.m);return}
+    if(el.classList&&el.classList.contains('chip')&&el.dataset.c){go('#c-'+el.dataset.c);return}
+    if(el.dataset&&el.dataset.go){
+      e.preventDefault();
+      if(el.dataset.go==='home')go('#home');
+      else if(el.dataset.go==='mod')go('#m-'+el.dataset.m);
+      else if(el.dataset.go==='c'&&el.dataset.c)go('#c-'+el.dataset.c);
+      else if(el.dataset.go==='all')go('#all');
+      return;
+    }
+    el=el.parentNode;
+  }
+});
 
 // ---------- RIA 懒加载（data/<bid>.js + part 定位）----------
 function loadScript(src){return new Promise(function(res,rej){
@@ -280,7 +468,116 @@ window.__clFill=function(card){
 };
 
 buildToc();
-render();
+st.modeLabel='全部';
+route();
+
+// ---------- AI 助手（检索拆页片段 → dopenclaw 轻代理 → GLM 作答带引用）----------
+var AI_URL='https://dopenclaw.aibay.asia/cl2-ai/ask';
+var aiPanel=document.getElementById('aiPanel'),aiFab=document.getElementById('aiFab'),
+    aiMsgs=document.getElementById('aiMsgs'),aiForm=document.getElementById('aiForm'),
+    aiQ=document.getElementById('aiQ'),aiGo=document.getElementById('aiGo'),
+    aiClose=document.getElementById('aiClose');
+aiFab.onclick=function(){aiPanel.classList.toggle('show');if(aiPanel.classList.contains('show'))aiQ.focus()};
+aiClose.onclick=function(){aiPanel.classList.remove('show')};
+function tokenize(q){
+  return String(q||'').toLowerCase().split(/[\s，。？！、,.?!'"]+/).filter(function(w){return w.length>=2});
+}
+function retrieve(q){
+  var kws=tokenize(q);
+  if(!kws.length)return CARDS.slice(0,6);
+  var scored=CARDS.map(function(c){
+    var t=(c.t||'').toLowerCase(),r=(c.r||'').toLowerCase(),s=(c.s||'').toLowerCase(),sc=0;
+    kws.forEach(function(k){
+      if(t.indexOf(k)>=0)sc+=3;
+      if(r.indexOf(k)>=0)sc+=2;
+      if(s.indexOf(k)>=0)sc+=1;
+    });
+    if(c.g==='A')sc+=0.4;else if(c.g==='B')sc+=0.2;
+    return {c:c,sc:sc};
+  }).filter(function(x){return x.sc>0});
+  scored.sort(function(a,b){return b.sc-a.sc});
+  return scored.slice(0,8).map(function(x){return x.c});
+}
+var CHNAME={};
+CHAPS.forEach(function(c){CHNAME[c.id]=c.name});
+function scrollCard(i){
+  var el=document.querySelector('.card[data-ai="'+i+'"]');
+  if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  el.style.borderColor='var(--brand-1)';
+  setTimeout(function(){el.style.borderColor=''},1800);
+}
+function aiAdd(cls,text){
+  var d=document.createElement('div');
+  d.className='ai-m '+cls;
+  d.textContent=text;
+  aiMsgs.appendChild(d);
+  aiMsgs.scrollTop=aiMsgs.scrollHeight;
+  return d;
+}
+function aiRefsRow(refs){
+  var row=document.createElement('div');
+  row.className='ai-refs';
+  refs.forEach(function(r){
+    var b=document.createElement('span');
+    b.className='ai-ref';
+    b.textContent='［'+r.i+'］'+(r.t||'')+(r.s?' ·《'+r.s+'》':'');
+    b.onclick=function(){scrollCard(r.i)};
+    row.appendChild(b);
+  })
+  aiMsgs.appendChild(row);
+  aiMsgs.scrollTop=aiMsgs.scrollHeight;
+}
+function renderAnswer(el,refs){
+  var parts=String(el.textContent).split(/([［\[]\d+[］\]])/);
+  el.textContent='';
+  parts.forEach(function(p){
+    var m=p.match(/^[［\[](\d+)[］\]]$/);
+    if(m){
+      var i=+m[1];
+      var s=document.createElement('span');
+      s.className='cit';s.textContent=i;
+      s.title=refs[i-1]?(refs[i-1].t||''):'';
+      s.onclick=function(){scrollCard(i)};
+      el.appendChild(s);
+    }else if(p){el.appendChild(document.createTextNode(p))}
+  });
+}
+function tagRefCards(refs){
+  document.querySelectorAll('.card[data-ai]').forEach(function(el){el.removeAttribute('data-ai')});
+  refs.forEach(function(r){
+    var c=AI_CTX[r.i-1];
+    if(!c)return;
+    var el=document.querySelector('.card[data-b="'+c.b+'"][data-i="'+c.i+'"]');
+    if(el)el.setAttribute('data-ai',r.i);
+  });
+}
+var AI_CTX=[];
+aiForm.onsubmit=function(e){
+  e.preventDefault();
+  var q=aiQ.value.trim();
+  if(!q)return;
+  aiAdd('u',q);
+  aiQ.value='';aiGo.disabled=true;
+  var wait=aiAdd('a','翻卡片中…');
+  AI_CTX=retrieve(q);
+  var ctx=AI_CTX.map(function(c){
+    return {t:c.t,r:c.r,s:c.s,g:c.g,ch:CHNAME[c.c]||c.c};
+  });
+  fetch(AI_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({q:q,ctx:ctx})})
+  .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
+  .then(function(res){
+    wait.remove();
+    if(!res.ok||!res.j.a){aiAdd('err',(res.j&&res.j.error)||'AI 暂时不可用，稍后再试');return}
+    var el=aiAdd('a',res.j.a);
+    renderAnswer(el,res.j.refs||[]);
+    aiRefsRow(res.j.refs||[]);
+    tagRefCards(res.j.refs||[]);
+  })
+  .catch(function(){wait.remove();aiAdd('err','网络不给力，稍后再试')})
+  .then(function(){aiGo.disabled=false});
+};
 })();
 </script>
 </body>
