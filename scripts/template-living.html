@@ -480,7 +480,13 @@ var aiPanel=document.getElementById('aiPanel'),aiFab=document.getElementById('ai
 aiFab.onclick=function(){aiPanel.classList.toggle('show');if(aiPanel.classList.contains('show'))aiQ.focus()};
 aiClose.onclick=function(){aiPanel.classList.remove('show')};
 function tokenize(q){
-  return String(q||'').toLowerCase().split(/[\s，。？！、,.?!'"]+/).filter(function(w){return w.length>=2});
+  var parts=String(q||'').toLowerCase().split(/[\s，。？！、,.?!'"]+/).filter(function(w){return w.length>=2});
+  var out=[];
+  parts.forEach(function(w){
+    if(/^[a-z0-9]+$/.test(w)){out.push(w);return}
+    for(var i=0;i<w.length-1;i++)out.push(w.substr(i,2));
+  });
+  return out;
 }
 function retrieve(q){
   var kws=tokenize(q);
