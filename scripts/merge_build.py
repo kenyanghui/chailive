@@ -25,14 +25,15 @@ def sha(s):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--work", default="/tmp/octopus/cfl-work")
-    ap.add_argument("--out", default="/root/chailive")
-    ap.add_argument("--books", default="/root/chaishu-hot/raw/books.json")
-    ap.add_argument("--covers", default="/root/chaishu-hot/raw/covers-report.json")
+    ap.add_argument("--work", default=str(Path(__file__).resolve().parent.parent / "raw"))
+    ap.add_argument("--out", default=str(Path(__file__).resolve().parent.parent))
+    ap.add_argument("--books", default=str(Path(__file__).resolve().parent.parent / "raw" / "books.json"))
+    ap.add_argument("--covers", default=str(Path(__file__).resolve().parent.parent / "raw" / "covers-report.json"))
     ap.add_argument("--expect-files", type=int, default=1713)
     ap.add_argument("--expect-memoirs", type=int, default=19262)
     a = ap.parse_args()
 
+    REPO = Path(__file__).resolve().parent.parent
     work, out = Path(a.work), Path(a.out)
     outs = work / "outs"
     shard_dirs = sorted(d for d in outs.iterdir() if d.is_dir() and d.name.startswith("shard"))
@@ -112,7 +113,7 @@ def main():
         shutil.rmtree(data_dir)
     data_dir.mkdir(parents=True)
     have_cover = set()
-    cov_dir = Path("/root/gh-chaishu/public/hot/covers")
+    cov_dir = REPO / "covers"
     if cov_dir.exists():
         have_cover = {p.stem for p in cov_dir.glob("*.jpg")}
     src_books = json.loads(Path(a.books).read_text())
@@ -190,13 +191,16 @@ def main():
             rec["title"] = bo["book"].get("title") or rec["title"]
 
     # 封面随仓自包含（零外部依赖灵魂）：covers/<id>.jpg
-    src_cov = Path("/root/gh-chaishu/public/hot/covers")
+    src_cov = REPO / "covers"
     dst_cov = out / "covers"
-    if dst_cov.exists():
-        shutil.rmtree(dst_cov)
-    if src_cov.exists():
-        shutil.copytree(src_cov, dst_cov)
-        print(f"covers: {len(list(dst_cov.glob('*.jpg')))} copied")
+    if src_cov.resolve() == dst_cov.resolve():
+        pass  # out 即仓根：封面已在位，勿自删
+    else:
+        if dst_cov.exists():
+            shutil.rmtree(dst_cov)
+        if src_cov.exists():
+            shutil.copytree(src_cov, dst_cov)
+            print(f"covers: {len(list(dst_cov.glob('*.jpg')))} copied")
 
     # ---- 5. L1 注入模板 + 产物 ----
     tmpl = Path(__file__).resolve().parent.joinpath("template.html").read_text()

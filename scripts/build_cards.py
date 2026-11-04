@@ -11,11 +11,11 @@ import hashlib, json, shutil, sys
 from collections import Counter
 from pathlib import Path
 
-OUTS = Path("/tmp/octopus/cfl-work/outs")
+OUTS = Path(__file__).resolve().parent.parent / "raw" / "outs"
 CH_DIR = Path(__file__).resolve().parent / "chapters"
 SC = Path(__file__).resolve().parent
-OUT = Path("/root/chailive")
-META = Path("/tmp/octopus/cl2-work/books.meta.json")
+OUT = Path(__file__).resolve().parent.parent
+META = Path(__file__).resolve().parent.parent / "raw" / "books.meta.json"
 
 def sha(b):
     return hashlib.sha256(b).hexdigest()
