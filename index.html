@@ -130,6 +130,51 @@ button.tobooks{margin-left:auto}
 mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .hnt{font-size:11px;color:var(--t3);padding:6px 0 0}
 
+/* ---- 便签练武场 ---- */
+.np-box{margin-top:12px;border-top:1px dashed var(--divider);padding-top:10px}
+.np-box .np-t{font-size:12px;font-weight:700;color:var(--brand-1);letter-spacing:.05em;display:flex;align-items:center;gap:8px}
+.np-box .np-t .done{font-size:10.5px;color:#fff;background:var(--ga);padding:1px 8px;border-radius:99px;font-weight:700}
+.np-area{width:100%;box-sizing:border-box;margin-top:8px;border:1px solid var(--divider);border-radius:8px;background:var(--bg);
+  color:var(--t1);font:13px/1.6 var(--font);padding:8px 10px;resize:vertical;min-height:56px}
+.np-area:focus{outline:none;border-color:var(--brand-2)}
+.np-row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--brand-2);background:var(--brand-1);color:#fff;font:12.5px var(--font);font-weight:650;
+  padding:5px 14px;border-radius:8px;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;color:var(--brand-1)}
+.np-verdict{margin-top:9px;border-radius:8px;padding:8px 11px;font-size:12.5px;line-height:1.6}
+.np-verdict.ok{background:var(--ga-soft);color:var(--ga)}
+.np-verdict.no{background:var(--gc-soft);color:var(--gc)}
+.np-verdict b{font-size:13px}
+.np-verdict .tip{display:block;margin-top:2px;color:var(--t2)}
+.card.done .chead .tt::after{content:"✓ 已练";font-size:10.5px;color:var(--ga);font-weight:700;margin-left:8px}
+
+/* ---- 每日一拆 / 地图 / 海报 ---- */
+.daily-hero{border:1px solid var(--divider);border-radius:14px;background:var(--bg-elv);padding:18px 20px;margin-bottom:16px}
+.daily-hero .dt{font-size:12px;color:var(--brand-1);font-weight:700;letter-spacing:.08em}
+.daily-hero .dh{font-size:19px;font-weight:750;margin:6px 0 2px}
+.daily-hero .dm{font-size:12.5px;color:var(--t3)}
+.daily-hero .dr{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap;font-size:12.5px;color:var(--t2)}
+.streak{font-weight:750;color:var(--brand-1)}
+.mapgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.modcard{border:1px solid var(--divider);border-radius:12px;background:var(--bg-elv);padding:14px 16px}
+.modcard .mh1{font-weight:750;font-size:14.5px;display:flex;justify-content:space-between;align-items:baseline}
+.modcard .mh1 .pct{font-size:11.5px;color:var(--brand-1);font-weight:700}
+.chgrid{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.chdot{position:relative;width:34px;height:34px;border-radius:9px;border:1px solid var(--divider);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-size:10px;color:var(--t3);cursor:pointer;font-variant-numeric:tabular-nums}
+.chdot:hover{border-color:var(--brand-2)}
+.chdot .nm{max-width:32px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8.5px}
+.chdot.v1{background:var(--brand-soft);border-color:var(--brand-2);color:var(--brand-1)}
+.chdot.v2{background:var(--ga-soft);border-color:var(--ga);color:var(--ga);font-weight:700}
+.chdot .lv{font-size:11px;font-weight:750;line-height:1}
+.poster-wrap{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
+.poster-wrap.show{display:flex}
+.poster-card{background:var(--bg-elv);border-radius:14px;padding:18px;max-width:92vw;max-height:92vh;overflow:auto}
+.poster-card canvas{border-radius:10px;max-width:100%;height:auto;display:block}
+.poster-acts{display:flex;gap:10px;margin-top:12px;justify-content:center;flex-wrap:wrap}
+.poster-acts .btn.ghost{border-color:var(--divider)}
+
 /* ---- AI 助手 ---- */
 #aiFab{position:fixed;right:18px;bottom:64px;height:38px;padding:0 16px;border-radius:99px;border:1px solid var(--brand-2);
   background:var(--brand-1);color:#fff;font:13.5px var(--font);font-weight:650;cursor:pointer;z-index:45;
@@ -172,7 +217,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   .bar input{max-width:none}
 }
 @media print{
-  .bar,.toc,#top,.hnt{display:none}
+  .bar,.toc,#top,.hnt,#posterWrap,#aiFab,#aiPanel{display:none!important}
   .wrap{padding-top:0}
   .card{break-inside:avoid}
   .cbody{display:block}
@@ -200,6 +245,13 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   <div class="ai-tip">基于本站 19262 张拆页卡片回答。点回答里的 <span class="cit">1</span> 可跳到对应卡片。</div>
   <div id="aiMsgs"></div>
   <form id="aiForm"><input id="aiQ" type="text" placeholder="问问看：怎么跟青春期孩子说话？" autocomplete="off"><button id="aiGo" type="submit">发送</button></form>
+</div>
+<div id="posterWrap" class="poster-wrap" onclick="if(event.target===this)closePoster()">
+  <div class="poster-card"><div class="poster-acts">
+    <button class="btn" onclick="dlPoster()">保存图片</button>
+    <button class="btn ghost" onclick="cpPoster()">复制链接</button>
+    <button class="btn ghost" onclick="closePoster()">关闭</button>
+  </div></div>
 </div>
 <script src="data/chapters.js"></script>
 <script>
@@ -253,6 +305,8 @@ var tocLinks=[];
 function buildToc(){
   var h='<div class="brand">拆生活指南<br>'+MODS.length+' 个兴趣模块 · '+CHAPS.length+' 章 · '+CARDS.length+' 张拆页卡片</div>';
   h+='<a href="#all" data-id="__all"><span>全部章节</span><span class="n">'+CARDS.length+'</span></a>';
+  h+='<a href="#daily" data-id="__daily"><span>每日一拆</span><span class="n">✓</span></a>';
+  h+='<a href="#map" data-id="__map"><span>知识地图</span><span class="n">·</span></a>';
   MODS.forEach(function(mo){
     h+='<div class="tg" data-mg="'+mo.id+'"><div class="tg-h" data-id="'+mo.id+'"><span>'+esc(mo.name)+'</span><span class="n">'+mo.n+'</span></div>';
     mo.chs.forEach(function(cid){
@@ -264,6 +318,10 @@ function buildToc(){
   toc.innerHTML=h;
   var allLink=toc.querySelector('a[data-id="__all"]');
   allLink.onclick=function(e){e.preventDefault();go('#all')};
+  var dailyLink=toc.querySelector('a[data-id="__daily"]');
+  if(dailyLink)dailyLink.onclick=function(e){e.preventDefault();go('#daily')};
+  var mapLink=toc.querySelector('a[data-id="__map"]');
+  if(mapLink)mapLink.onclick=function(e){e.preventDefault();go('#map')};
   tocLinks=[].slice.call(toc.querySelectorAll('a.sub'));
   tocLinks.forEach(function(a){a.onclick=function(e){e.preventDefault();go('#c-'+a.dataset.id)}});
   [].slice.call(toc.querySelectorAll('.tg-h')).forEach(function(tg){
@@ -305,7 +363,7 @@ function cardHTML(c,idx){
     +'<div class="cbody">'
     +(c.r?'<div class="say">'+hl(c.r,st.q)+'</div>':'<div class="say hnt">（无说人话摘要）</div>')
     +(c.s?'<div class="src" onclick="location.href=\'books.html#book/'+c.b+'\'">出处 ·《'+esc(c.s)+'》 → 书库详情</div>':'')
-    +'<div class="ria-box"></div>'
+    +'<div class="ria-box"></div><div class="np-box"></div>'
     +'</div></div>';
   return h;
 }
@@ -321,7 +379,12 @@ function renderFilteredFlat(){
   tocSync();
 }
 function showHome(){
+  var dc=dailyCard(),doneToday=!!PROG.d[bjDay()],sk=streak();
   var h='<section class="chap"><div class="cid">CHAILIVE</div><h1>拆生活指南</h1><p class="cdesc">不按书架，按生活分——挑一个你此刻关心的模块进去读。'+CHAPS.length+' 个主题章 · '+CARDS.length+' 张拆页卡片，都能按兴趣连着看。</p></section>';
+  h+='<div class="daily-hero" data-go="daily" style="cursor:pointer"><div class="dt">每日一拆 · '+bjDay()+'</div>'
+    +'<div class="dh">'+esc(dc.t)+'</div>'
+    +'<div class="dm">《'+esc(dc.s)+'》 · 今天'+(doneToday?'已打卡 ✓':'还没打卡')+'</div>'
+    +'<div class="dr"><span class="streak">🔥 连续 '+sk+' 天</span><span>点开写 A1/A2，AI 评审通过即打卡 →</span></div></div>';
   h+='<div class="mods">';
   MODS.forEach(function(mo){
     h+='<div class="modc" data-m="'+mo.id+'"><div class="mn">'+esc(mo.name)+'</div><div class="mh">'+esc(mo.hook||'')+'</div><div class="mc-chips">';
@@ -395,7 +458,9 @@ function showAll(){
 }
 function route(){
   var hs=location.hash.replace(/^#/,'');
-  if(hs.indexOf('c-')===0&&chapById(hs.slice(2))){st.view='chap';st.ch=hs.slice(2);st.mod=null;showChap()}
+  if(hs==='daily'){st.view='daily';st.ch=null;st.mod=null;showDaily()}
+  else if(hs==='map'){st.view='map';st.ch=null;st.mod=null;showMap()}
+  else if(hs.indexOf('c-')===0&&chapById(hs.slice(2))){st.view='chap';st.ch=hs.slice(2);st.mod=null;showChap()}
   else if(hs.indexOf('m-')===0&&modById(hs.slice(2))){st.view='mod';st.mod=hs.slice(2);st.ch=null;showMod()}
   else if(hs==='all'){st.view='all';st.ch=null;st.mod=null;showAll()}
   else{st.view='home';st.ch=null;st.mod=null;showHome()}
@@ -407,12 +472,15 @@ stream.addEventListener('click',function(e){
   while(el&&el!==stream){
     if(el.classList&&el.classList.contains('modc')&&el.dataset.m){go('#m-'+el.dataset.m);return}
     if(el.classList&&el.classList.contains('chip')&&el.dataset.c){go('#c-'+el.dataset.c);return}
+    if(el.classList&&el.classList.contains('chdot')&&el.dataset.c){go('#c-'+el.dataset.c);return}
     if(el.dataset&&el.dataset.go){
       e.preventDefault();
       if(el.dataset.go==='home')go('#home');
       else if(el.dataset.go==='mod')go('#m-'+el.dataset.m);
       else if(el.dataset.go==='c'&&el.dataset.c)go('#c-'+el.dataset.c);
       else if(el.dataset.go==='all')go('#all');
+      else if(el.dataset.go==='daily')go('#daily');
+      else if(el.dataset.go==='poster')openPoster(null,null);
       return;
     }
     el=el.parentNode;
@@ -439,6 +507,8 @@ function findMemoir(bd,mid){
 }
 window.__clFill=function(card){
   var bid=card.dataset.b, mid=card.dataset.i, box=card.querySelector('.ria-box');
+  var cc=CARDS.filter(function(x){return x.b===bid&&String(x.i)===String(mid)})[0];
+  if(cc){markVisited(cc.c);mountPractice(card,cc)}
   if(!card.dataset.x||card.dataset.x==='0'){box.innerHTML='<div class="rv hnt">该拆页无 RIA 便签</div>';box.classList.add('show');return}
   box.innerHTML='<div class="rv hnt">RIA 加载中…</div>';box.classList.add('show');
   var p1=loaded[bid]||(loaded[bid]=loadScript('data/'+bid+'.js').then(function(){
@@ -466,6 +536,197 @@ window.__clFill=function(card){
     box.innerHTML=h;
   }).catch(function(){box.innerHTML='<div class="rv hnt">RIA 加载失败</div>'});
 };
+
+// ---------- 进度存档（localStorage：visited 章 / practiced 卡 / daily 打卡）----------
+var PKEY='cl2-progress';
+function loadProg(){try{return JSON.parse(localStorage.getItem(PKEY))||{v:{},p:{},d:{}}}catch(e){return{v:{},p:{},d:{}}}}
+function saveProg(pg){try{localStorage.setItem(PKEY,JSON.stringify(pg))}catch(e){}}
+var PROG=loadProg();
+function markVisited(cid){if(!cid||PROG.v[cid])return;PROG.v[cid]=1;saveProg(PROG)}
+function markPracticed(cid,key){if(!key)return;PROG.p[key]={c:cid,t:Date.now(),sc:PROG.p[key]?PROG.p[key].sc:0};if(cid)PROG.v[cid]=1;saveProg(PROG)}
+function bjDay(){var d=new Date(Date.now()+8*3600e3);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0')}
+function streak(){
+  var days=Object.keys(PROG.d).sort(),n=0,today=bjDay();
+  if(!days.length)return 0;
+  var d=new Date(Date.parse(today)+8*3600e3);
+  for(var i=0;i<400;i++){
+    var ds=new Date(d.getTime()-i*86400e3+8*3600e3);
+    var k=ds.getUTCFullYear()+'-'+String(ds.getUTCMonth()+1).padStart(2,'0')+'-'+String(ds.getUTCDate()).padStart(2,'0');
+    if(PROG.d[k])n++;else if(i===0)continue;else break;
+  }
+  return n;
+}
+
+// ---------- 每日一拆选卡：北京时间日期做种子，从 A 级 RIA 卡里确定性轮换 ----------
+function dailyCard(){
+  var pool=CARDS.filter(function(c){return c.g==='A'&&c.x});
+  var day=bjDay(),seed=0;
+  for(var i=0;i<day.length;i++)seed=(seed*31+day.charCodeAt(i))>>>0;
+  return pool[seed%pool.length];
+}
+
+// ---------- 便签练武场：挂载到卡片 np-box ----------
+var RV_URL='https://dopenclaw.aibay.asia/cl2-ai/review';
+function mountPractice(card,c){
+  var box=card.querySelector('.np-box');if(!box)return;
+  var key=c.b+'_'+c.i,done=PROG.p[key];
+  if(done&&done.sc>=4){
+    box.innerHTML='<div class="np-t">练武场<span class="done">✓ 已练 '+done.sc+'/6 分</span></div>'
+      +'<div class="np-verdict ok" style="margin-top:8px">'+esc(done.vd||'评审已通过')+'</div>'
+      +'<div class="np-row"><button class="btn ghost" data-np="redo">再练一次</button><button class="btn ghost" data-np="poster">生成海报</button></div>';
+  }else{
+    box.innerHTML='<div class="np-t">练武场 · 写我的便签</div>'
+      +'<textarea class="np-area" data-np="a1" placeholder="A1 我的相关经历：什么场景下遇到过拆页讲的问题？当时怎么做的？"></textarea>'
+      +'<textarea class="np-area" data-np="a2" placeholder="A2 我要怎么用：具体场景 + 可验证的行动 + 期限"></textarea>'
+      +'<div class="np-row"><button class="btn" data-np="go">交 AI 评审员</button><span style="font-size:11px;color:var(--t3)">评审维度：A1 是否具体有场景；A2 是否可执行（SMART）</span></div>'
+      +'<div class="np-verdict" data-np="out" style="display:none"></div>';
+  }
+  var out=box.querySelector('[data-np="out"]');
+  function showResult(r){
+    out.style.display='block';out.className='np-verdict '+(r.pass?'ok':'no');
+    var h='<b>'+(r.pass?'通过':'再改改')+' · '+r.score+'/6</b> '+esc(r.verdict||'');
+    (r.tips||[]).forEach(function(t){h+='<span class="tip">· '+esc(t)+'</span>'});
+    out.innerHTML=h;
+  }
+  box.onclick=function(ev){
+    var t=ev.target;
+    if(t.dataset&&t.dataset.np==='go'){
+      var a1=(box.querySelector('[data-np="a1"]')||{}).value||'',a2=(box.querySelector('[data-np="a2"]')||{}).value||'';
+      if(a1.trim().length<10||a2.trim().length<10){showResult({pass:false,score:0,verdict:'A1/A2 各至少写 10 个字',tips:[]});return}
+      t.disabled=true;t.textContent='评审中…';
+      fetch(RV_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({card:{t:c.t,r:(c.r||'').slice(0,300),s:c.s},a1:a1.slice(0,800),a2:a2.slice(0,800)})})
+      .then(function(r){return r.json()}).then(function(r){
+        if(r.error)throw new Error(r.error);
+        showResult(r);
+        if(r.pass){
+          PROG.p[key]={c:c.c,t:Date.now(),sc:r.score,vd:r.verdict};
+          if(c.c)PROG.v[c.c]=1;
+          PROG.d[bjDay()]=1;saveProg(PROG);
+          card.classList.add('done');t.textContent='✓ 已通过';setTimeout(function(){mountPractice(card,c)},1200);
+        }else{t.disabled=false;t.textContent='再交一次'}
+      }).catch(function(e){showResult({pass:false,score:0,verdict:'评审员暂时不在（'+e.message+'），稍后再试',tips:[]});t.disabled=false;t.textContent='再交一次'});
+    }else if(t.dataset&&t.dataset.np==='redo'){
+      delete PROG.p[key];saveProg(PROG);mountPractice(card,c);
+    }else if(t.dataset&&t.dataset.np==='poster'){
+      openPoster(c,key);
+    }
+  };
+}
+
+// ---------- 每日一拆视图 ----------
+function showDaily(){
+  var c=dailyCard(),cp=chapById(c.c),mo=modOf(c.c),today=bjDay(),doneToday=!!PROG.d[today],sk=streak();
+  var h='<div class="bc"><a href="#" data-go="home">首页</a> › 每日一拆</div>';
+  h+='<div class="daily-hero"><div class="dt">DAILY · '+today+'</div>'
+    +'<div class="dh">'+esc(c.t)+'</div>'
+    +'<div class="dm">《'+esc(c.s)+'》 · '+(mo?esc(mo.name)+' · ':'')+esc(cp?cp.name:'')+'</div>'
+    +'<div class="dr"><span class="streak">🔥 连续 '+sk+' 天</span><span>'+(doneToday?'今天已打卡 ✓':'今天还没打卡——展开卡片写 A1/A2，评审通过即打卡')+'</span></div></div>';
+  h+=cardHTML(c,1);
+  h+='<div class="empty">— 想多练几张？<a href="#" data-go="all" style="color:var(--brand-1)">去全部章节逛逛</a> —</div>';
+  stream.innerHTML=h;
+  tocSync();
+}
+
+// ---------- 知识地图视图 ----------
+function showMap(){
+  var h='<div class="bc"><a href="#" data-go="home">首页</a> › 知识地图</div>';
+  h+='<section class="chap"><div class="cid">MAP</div><h1>我的知识地图</h1><p class="cdesc">读一章点亮一盏灯，练过一张卡烧亮一格。点亮进度存在本机浏览器里。</p></section>';
+  var totV=0,totP=0;
+  MODS.forEach(function(mo){
+    var v=0,pr=0;
+    mo.chs.forEach(function(cid){if(PROG.v[cid])v++;pr+=Object.keys(PROG.p).filter(function(k){return PROG.p[k].c===cid}).length});
+    totV+=v;totP+=pr;
+    var pct=Math.round(v/mo.chs.length*100);
+    h+='<div class="modcard"><div class="mh1"><span>'+esc(mo.name)+'</span><span class="pct">'+v+'/'+mo.chs.length+' 章 · '+pct+'%</span></div><div class="chgrid">';
+    mo.chs.forEach(function(cid){
+      var cp2=chapById(cid);if(!cp2)return;
+      var practiced=Object.keys(PROG.p).some(function(k){return PROG.p[k].c===cid});
+      var cls=practiced?'v2':(PROG.v[cid]?'v1':'');
+      h+='<div class="chdot '+cls+'" data-go="c" data-c="'+cid+'" title="'+esc(cp2.name)+'"><span class="lv">'+cid.replace('ch','')+'</span><span class="nm">'+esc(cp2.name)+'</span></div>';
+    });
+    h+='</div></div>';
+  });
+  h+='<div class="empty">已点亮 '+totV+'/'+CHAPS.length+' 章 · 累计便签 '+totP+' 张 · <a href="#" data-go="poster" style="color:var(--brand-1)">生成我的成就海报</a></div>';
+  stream.innerHTML=h;
+  tocSync();
+}
+
+// ---------- 分享海报（canvas 零依赖）----------
+function rr(g,x,y,w,h,r){
+  if(g.roundRect){g.beginPath();g.roundRect(x,y,w,h,r);g.fill();return}
+  g.fillRect(x,y,w,h);
+}
+function wrapText(g,txt,x,y,w,lh){
+  var line='',yy=y;
+  for(var i=0;i<txt.length;i++){
+    var test=line+txt[i];
+    if(g.measureText(test).width>w&&line){g.fillText(line,x,yy);line=txt[i];yy+=lh}else line=test;
+  }
+  if(line){g.fillText(line,x,yy);yy+=lh}
+  return yy;
+}
+function drawPoster(cv,info){
+  var W=750,H=1000;cv.width=W;cv.height=H;
+  var g=cv.getContext('2d');
+  var dark=document.documentElement.dataset.theme==='dark';
+  g.fillStyle=dark?'#16181d':'#f7f5f0';g.fillRect(0,0,W,H);
+  g.fillStyle='#c96442';g.fillRect(0,0,W,8);
+  g.fillStyle=dark?'#e8e4da':'#2b2b28';
+  g.font='700 46px sans-serif';g.fillText('拆学习 · 拆生活指南',48,110);
+  g.font='400 24px sans-serif';g.fillStyle=dark?'#9aa0a8':'#8a857a';
+  g.fillText('chailive · 每天拆一页，生活好一点',48,152);
+  g.strokeStyle=dark?'#2e3238':'#e5e0d5';g.beginPath();g.moveTo(48,190);g.lineTo(W-48,190);g.stroke();
+  var y=260;
+  if(info.mode==='card'){
+    g.fillStyle='#c96442';g.font='700 22px sans-serif';g.fillText('今日一拆',48,y);y+=54;
+    g.fillStyle=dark?'#e8e4da':'#2b2b28';g.font='700 34px sans-serif';
+    y=wrapText(g,info.t,48,y,W-96,46);
+    g.font='400 22px sans-serif';g.fillStyle=dark?'#9aa0a8':'#8a857a';
+    g.fillText('《'+info.s+'》',48,y);y+=72;
+    g.fillStyle='#c96442';g.font='700 22px sans-serif';g.fillText('我的便签评审 · '+info.score+'/6 分',48,y);y+=44;
+    g.fillStyle=dark?'#9aa0a8':'#8a857a';g.font='400 20px sans-serif';
+    y=wrapText(g,info.vd||'评审通过',48,y,W-96,32);
+  }else{
+    g.fillStyle='#c96442';g.font='700 22px sans-serif';g.fillText('我的知识地图',48,y);y+=70;
+    g.fillStyle=dark?'#e8e4da':'#2b2b28';g.font='700 72px sans-serif';
+    g.fillText(info.lit+'/'+info.total,48,y);y+=44;
+    g.font='400 24px sans-serif';g.fillStyle=dark?'#9aa0a8':'#8a857a';
+    g.fillText('章已点亮 · 累计便签 '+info.notes+' 张 · 连续 '+info.streak+' 天',48,y);y+=76;
+    var cols=10,cw=(W-96)/cols,ch=26;
+    for(var i=0;i<info.total;i++){
+      var cid='ch'+String(i+1).padStart(2,'0');
+      var practiced=Object.keys(PROG.p).some(function(k){return PROG.p[k].c===cid});
+      var visited=!!PROG.v[cid];
+      g.fillStyle=practiced?'#c96442':(visited?(dark?'#8a5a44':'#eec9b7'):(dark?'#2e3238':'#ece8de'));
+      rr(g,48+(i%cols)*cw,y+Math.floor(i/cols)*ch,cw-6,ch-6,6);
+    }
+  }
+  g.fillStyle=dark?'#9aa0a8':'#8a857a';g.font='400 20px sans-serif';
+  g.fillText('www.aibay.asia/chailive/',48,H-52);
+}
+var posterCv=document.createElement('canvas');
+function openPoster(c,key){
+  var rec=key?PROG.p[key]:null;
+  var info=rec?{mode:'card',t:c.t,s:c.s,score:rec.sc,vd:rec.vd||'评审通过'}
+    :{mode:'map',lit:Object.keys(PROG.v).length,total:CHAPS.length,notes:Object.keys(PROG.p).length,streak:streak()};
+  drawPoster(posterCv,info);
+  var wrap=document.getElementById('posterWrap');
+  wrap.classList.add('show');
+  var stage=wrap.querySelector('canvas.stage');if(stage)stage.remove();
+  posterCv.className='stage';wrap.querySelector('.poster-card').insertBefore(posterCv,wrap.querySelector('.poster-acts'));
+}
+function closePoster(){document.getElementById('posterWrap').classList.remove('show')}
+function dlPoster(){
+  try{
+    var a=document.createElement('a');a.download='chailive-'+bjDay()+'.png';a.href=posterCv.toDataURL('image/png');a.click();
+  }catch(e){}
+}
+function cpPoster(){
+  var u='https://www.aibay.asia/chailive/';
+  try{navigator.clipboard.writeText(u).then(function(){alert('链接已复制：'+u)})}catch(e){prompt('复制链接：',u)}
+}
+window.openPoster=openPoster;window.closePoster=closePoster;window.dlPoster=dlPoster;window.cpPoster=cpPoster;window.drawPoster=drawPoster;
 
 buildToc();
 st.modeLabel='全部';
