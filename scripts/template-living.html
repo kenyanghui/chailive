@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="chailive · 拆生活指南：31 个生活主题章，19262 张拆页卡片，每张标注过级徽章（A/B/C）、说人话摘要与可展开的 RIA 便签。单文件、零依赖、可离线阅读。">
+<meta name="description" content="chailive · 拆生活指南：31 个生活主题章，19262 张拆页卡片，说人话摘要与可展开的 RIA 便签。单文件、零依赖、可离线阅读。">
 <title>chailive · 拆生活指南</title>
 <style>
 *,*::before,*::after{box-sizing:border-box}
@@ -229,7 +229,6 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   <h1 id="home">chailive<small>拆生活指南</small></h1>
   <input id="q" type="search" placeholder="搜主题 / 说人话 / 书名…" autocomplete="off">
   <button class="btn mode" data-m="all">全部</button>
-  <button class="btn mode" data-m="a">只看 A 级</button>
   <button class="btn mode" data-m="say">只看说人话</button>
   <button class="btn" id="theme">明暗</button>
   <button class="btn tobooks" onclick="location.href='books.html'">书库</button>
@@ -359,7 +358,7 @@ function cardHTML(c,idx){
   var h='<div class="card" data-b="'+c.b+'" data-i="'+c.i+'" data-x="'+(c.x?1:0)+'">'
     +'<div class="chead" onclick="var d=this.parentNode;if(d.classList.contains(\'open\')){d.classList.remove(\'open\')}else{d.classList.add(\'open\');window.__clFill(d)}">'
     +'<span class="no">'+no+'</span><span class="tt">'+hl(c.t||'(未命名)',st.q)+'</span>'
-    +'<span class="bdg '+gradeCls(c.g)+'">'+c.g+'</span></div>'
+    +'</div>'
     +'<div class="cbody">'
     +(c.r?'<div class="say">'+hl(c.r,st.q)+'</div>':'<div class="say hnt">（无说人话摘要）</div>')
     +(c.s?'<div class="src" onclick="location.href=\'books.html#book/'+c.b+'\'">出处 ·《'+esc(c.s)+'》 → 书库详情</div>':'')

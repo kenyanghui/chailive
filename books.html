@@ -242,14 +242,14 @@ function riaHTML(texts,kw){
 
 function memoirRow(bd,idxEntry,pi){
   return '<div class="trow" data-mid="'+idxEntry.i+'" data-pi="'+pi+'"><span class="tt">'+esc(idxEntry.t||idxEntry.q||'(未命名)')+'</span>'
-    +(idxEntry.l?'<span class="tl">'+esc(idxEntry.l)+'</span>':'')+'</div>'}
+    +'</div>'}
 
 // ---------- 首页 ----------
 function showHome(){
   st.view='home';document.title='chailive · 拆学习';
   var kws=st.q.trim();
   var html='<div class="hero"><h2>拆学习 · RIA 全库</h2>'
-    +'<p>把 <b>'+STATS.books+'</b> 本书的 <b>'+STATS.memoirs+'</b> 个拆页装进口袋：RIA 便签读书法（R 原文 / I 讲解 / A 促动）完整呈现，含拆书家署名、分舵、TF 级别与学习目标。数据脱敏发布，单文件架构，离线可用。</p>'
+    +'<p>把 <b>'+STATS.books+'</b> 本书的 <b>'+STATS.memoirs+'</b> 个拆页装进口袋：RIA 便签读书法（R 原文 / I 讲解 / A 促动）完整呈现，含拆书家署名、分舵与学习目标。数据脱敏发布，单文件架构，离线可用。</p>'
     +'<div class="kpis">'
     +'<span class="kpi"><b>'+STATS.books+'</b>本书</span>'
     +'<span class="kpi"><b>'+STATS.booksWithMemoirs+'</b>本有拆页</span>'
@@ -283,7 +283,7 @@ function renderGrid(){
     return '<div class="bcard" onclick="location.hash=\'book/'+b.id+'\'"><div class="covwrap">'+cov+'</div>'
       +'<div class="bmeta"><div class="t">'+hl(b.title,kw)+'</div><div class="a">'+esc(b.author||'佚名')+'</div>'
       +'<div class="badges">'+(b.nc?'<span class="bdg nc">'+b.nc+' 拆页</span>':'<span class="bdg">无拆页</span>')
-      +(b.ria?'<span class="bdg ria">RIA</span>':'')+(b.lv?'<span class="bdg">'+esc(b.lv)+'</span>':'')
+      +(b.ria?'<span class="bdg ria">RIA</span>':'')
       +((b.tags&&b.tags[0])?'<span class="bdg">'+esc(b.tags[0])+'</span>':'')+'</div></div></div>'}).join('');
   var p=document.getElementById('pager');
   if(pages>1){p.innerHTML='<div class="pager"><button class="btn" id="pp"'+(st.page<=1?' disabled':'')+'>‹ 上一页</button>'
@@ -310,7 +310,7 @@ function renderBook(focusMid){
     +'<div class="bkinfo"><h2>'+esc(b.title)+'</h2>'
     +'<div class="sub">'+esc([b.author,b.translator,b.publisher,b.pubdate].filter(Boolean).join(' · ')||'佚名')+'</div>'
     +'<div class="tagrow">'+(b.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')
-    +(b.lv?'<span class="tag">'+esc(b.lv)+'</span>':'')+'</div>'
+    +'</div>'
     +'<div class="badges" style="margin-top:8px"><span class="bdg nc">'+bd.n+' 拆页</span>'
     +(bd.np>1?'<span class="bdg">'+bd.np+' 个数据分片</span>':'')+'</div></div></div>'
     +'<div id="mlist"></div><div id="mpager"></div>';
@@ -324,7 +324,7 @@ function renderMList(focusMid){
     var e=idx[i];
     html+='<div class="mcard" data-i="'+i+'"><div class="mhead" onclick="var mc=this.parentNode;if(mc.classList.contains(\'open\')){mc.classList.remove(\'open\')}else{window.__cflExpand(mc)}">'
       +'<span class="no">#'+(i+1)+'</span><span class="topic">'+esc(e.t||'(未命名)')+'</span>'
-      +(e.l?'<span class="lv">'+esc(e.l)+'</span>':'')+'</div><div class="mbody" data-i="'+i+'"></div></div>'}
+      +'</div><div class="mbody" data-i="'+i+'"></div></div>'}
   var box=document.getElementById('mlist');box.innerHTML=html;
   var pg=document.getElementById('mpager');
   if(shown<total){pg.innerHTML='<button class="loadmore" id="lm">展开更多（已显示 '+shown+' / '+total+'）</button>';
@@ -354,7 +354,6 @@ function memoirBody(m){
   var meta=[];
   if(m.chaishujia)meta.push('拆书家 '+m.chaishujia.username+(m.chaishujia.city?'（'+m.chaishujia.city+'）':''));
   if(m.club)meta.push(m.club.name+(m.club.city?'·'+m.club.city:''));
-  if(m.level)meta.push(m.level);
   if(m.duration)meta.push(m.duration+' 分钟');
   return '<div class="mmeta">'+esc(meta.join(' · '))+'</div>'
     +(m.learn_goal?'<div class="goal"><b>学习目标</b>：'+esc(m.learn_goal)+'</div>':'')
@@ -377,7 +376,7 @@ function topicSearch(kw){
       +'<p style="color:var(--t3);font-size:12.5px">全局命中 '+hits.length+' 个拆页主题（前 100 条）</p>';
     hits.slice(0,100).forEach(function(t){
       html+='<div class="trow" onclick="location.hash=\'book/'+t.b+'\''+'"><span class="tt">'+hl(t.t,kw)+'</span>'
-        +'<span class="tb">'+esc(t.b)+'</span>'+(t.l?'<span class="tl">'+esc(t.l)+'</span>':'')+'</div>'});
+        +'<span class="tb">'+esc(t.b)+'</span></div>'});
     main.innerHTML=html;
   },function(e){main.innerHTML='<div class="err">'+esc(e.message)+'</div>'})}
 
