@@ -28,6 +28,13 @@ def main():
         sys.exit(f"modules.json 归组对账失败: chapters={len(chs)} grouped={len(_seen)} uniq={len(set(_seen))}")
     bc = {x["id"]: x["ch"] for x in json.loads((CH_DIR / "book_chapters.json").read_text())}
     bt = {b["id"]: b.get("t", "") for b in json.loads(META.read_text())}
+    # 标题人话化 override：titles.json 键 b:i，构建期 fail-closed 校验（禁词/长度）
+    tv = json.loads((CH_DIR / "titles.json").read_text())
+    import re as _re
+    _ban = _re.compile(r"TF\s?\d|过级|练级|晋级|定级|拆页|RIA现场|分舵|专场|拆书帮")
+    for _k, _t in tv.items():
+        if not (8 <= len(_t) <= 22) or _ban.search(_t):
+            sys.exit(f"titles.json 校验失败: {_k} → {_t!r}")
 
     cards = []
     ch_cnt = Counter()
@@ -48,7 +55,7 @@ def main():
                 )
                 cards.append({
                     "c": ch, "b": bid, "i": m.get("id"),
-                    "t": (m.get("topic") or "")[:80],
+                    "t": tv.get(f"{bid}:{m.get('id')}") or (m.get("topic") or "")[:80],
                     "s": bt.get(bid, "")[:36] or None,
                     "r": (m.get("remark") or "").replace("\r\n", "\n").strip()[:300] or None,
                     "l": lvl or None, "g": g, "x": 1 if ria else 0,
