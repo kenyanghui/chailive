@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="chailive · 拆生活指南：31 个生活主题章，19262 张拆页卡片，说人话摘要与可展开的 RIA 便签。单文件、零依赖、可离线阅读。">
-<title>chailive · 拆生活指南</title>
+<meta name="description" content="chailive · 拆学习：31 个生活主题章，19262 张拆页卡片，说人话摘要与可展开的 RIA 便签。单文件、零依赖、可离线阅读。">
+<title>chailive · 拆学习</title>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
@@ -226,12 +226,13 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 </head>
 <body>
 <header class="bar">
-  <h1 id="home">chailive<small>拆生活指南</small></h1>
+  <h1 id="home">chailive<small>拆学习</small></h1>
   <input id="q" type="search" placeholder="搜主题 / 说人话 / 书名…" autocomplete="off">
   <button class="btn mode" data-m="all">全部</button>
   <button class="btn mode" data-m="say">只看说人话</button>
   <button class="btn" id="theme">明暗</button>
   <button class="btn tobooks" onclick="location.href='books.html'">书库</button>
+  <button class="btn" onclick="location.href='https://chai.aibay.asia/'">回主站</button>
 </header>
 <div class="wrap">
   <nav class="toc" id="toc"><div class="loading">加载中…</div></nav>
@@ -302,7 +303,7 @@ function computeFiltered(){
 // ---------- TOC（按模块分组） ----------
 var tocLinks=[];
 function buildToc(){
-  var h='<div class="brand">拆生活指南<br>'+MODS.length+' 个兴趣模块 · '+CHAPS.length+' 章 · '+CARDS.length+' 张拆页卡片</div>';
+  var h='<div class="brand">拆学习<br>'+MODS.length+' 个兴趣模块 · '+CHAPS.length+' 章 · '+CARDS.length+' 张拆页卡片</div>';
   h+='<a href="#all" data-id="__all"><span>全部章节</span><span class="n">'+CARDS.length+'</span></a>';
   h+='<a href="#daily" data-id="__daily"><span>每日一拆</span><span class="n">✓</span></a>';
   h+='<a href="#map" data-id="__map"><span>知识地图</span><span class="n">·</span></a>';
@@ -379,7 +380,7 @@ function renderFilteredFlat(){
 }
 function showHome(){
   var dc=dailyCard(),doneToday=!!PROG.d[bjDay()],sk=streak();
-  var h='<section class="chap"><div class="cid">CHAILIVE</div><h1>拆生活指南</h1><p class="cdesc">不按书架，按生活分——挑一个你此刻关心的模块进去读。'+CHAPS.length+' 个主题章 · '+CARDS.length+' 张拆页卡片，都能按兴趣连着看。</p></section>';
+  var h='<section class="chap"><div class="cid">CHAILIVE</div><h1>拆学习</h1><p class="cdesc">不按书架，按生活分——挑一个你此刻关心的模块进去读。'+CHAPS.length+' 个主题章 · '+CARDS.length+' 张拆页卡片，都能按兴趣连着看。</p></section>';
   h+='<div class="daily-hero" data-go="daily" style="cursor:pointer"><div class="dt">每日一拆 · '+bjDay()+'</div>'
     +'<div class="dh">'+esc(dc.t)+'</div>'
     +'<div class="dm">《'+esc(dc.s)+'》 · 今天'+(doneToday?'已打卡 ✓':'还没打卡')+'</div>'
@@ -672,7 +673,7 @@ function drawPoster(cv,info){
   g.fillStyle=dark?'#16181d':'#f7f5f0';g.fillRect(0,0,W,H);
   g.fillStyle='#c96442';g.fillRect(0,0,W,8);
   g.fillStyle=dark?'#e8e4da':'#2b2b28';
-  g.font='700 46px sans-serif';g.fillText('拆学习 · 拆生活指南',48,110);
+  g.font='700 46px sans-serif';g.fillText('拆学习',48,110);
   g.font='400 24px sans-serif';g.fillStyle=dark?'#9aa0a8':'#8a857a';
   g.fillText('chailive · 每天拆一页，生活好一点',48,152);
   g.strokeStyle=dark?'#2e3238':'#e5e0d5';g.beginPath();g.moveTo(48,190);g.lineTo(W-48,190);g.stroke();

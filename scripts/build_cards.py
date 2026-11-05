@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""cl2 卡片流构建器：拆页级扁平索引（chapters.js）+ 拆生活指南页（living.html）。
+"""cl2 卡片流构建器：拆页级扁平索引（chapters.js）+ 拆学习页（living.html）。
 
 依赖：merge_build.py 先跑（其会重建 data/，故本脚本必须后跑）。
 输入：cfl-work outs（clean 数据）+ scripts/chapters/{chapters,book_chapters}.json + books.meta.json
-输出：data/chapters.js（CHAI_CHAPTERS+CHAI_CARDS）+ index.html（从 template-living.html 静态拷贝，拆生活指南为新首页）
+输出：data/chapters.js（CHAI_CHAPTERS+CHAI_CARDS）+ index.html（从 template-living.html 静态拷贝，拆学习为新首页）
       + build.json 增补两文件 sha256
 """
 import hashlib, json, shutil, sys
